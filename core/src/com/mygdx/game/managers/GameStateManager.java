@@ -124,6 +124,20 @@ public class GameStateManager {
 	}
 	
 	/**
+	 * This is run when we transition to the play state.
+	 * @param lastState: the state we are adding on top of. ensures no accidental double-adding
+	 */
+	public void addPlayState(Class<? extends GameState> lastState) {
+		if (states.empty()) {
+			states.push(new PlayState(this));
+			states.peek().show();
+		} else if (states.peek().getClass().equals(lastState)) {
+			states.push(new PlayState(this));
+			states.peek().show();
+		}
+	}
+	
+	/**
 	 * Remove the top state from the stack
 	 * @param lastState: the state we expect to remove. ensures no double-removing
 	 */

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="28">
+ <tileset firstgid="1" source="tileset_0.tsx"/>
+ <layer id="2" name="Tile Layer 1" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFQwkwAjETATYpgB2IOQiw6QFI9Rch/5LqL3r7Fxcgxr+kxDUx/h1Ivw/X9DxSAACp9gDr
+  </data>
+ </layer>
+ <objectgroup id="3" name="square-layer">
+  <object id="14" x="64" y="256" width="64" height="64">
+   <properties>
+    <property name="neighbors" value="2"/>
+    <property name="squareId" value="1"/>
+   </properties>
+  </object>
+  <object id="15" x="160" y="256" width="64" height="64">
+   <properties>
+    <property name="neighbors" value="1,3"/>
+    <property name="squareId" value="2"/>
+   </properties>
+  </object>
+  <object id="16" x="256" y="160" width="64" height="64">
+   <properties>
+    <property name="neighbors" value="3,5"/>
+    <property name="squareId" value="4"/>
+   </properties>
+  </object>
+  <object id="17" x="352" y="160" width="64" height="64">
+   <properties>
+    <property name="neighbors" value="4,6"/>
+    <property name="squareId" value="5"/>
+   </properties>
+  </object>
+  <object id="18" x="448" y="160" width="64" height="64">
+   <properties>
+    <property name="neighbors" value="5,7"/>
+    <property name="squareId" value="6"/>
+   </properties>
+  </object>
+  <object id="19" x="448" y="256" width="64" height="64">
+   <properties>
+    <property name="neighbors" value="6,8"/>
+    <property name="squareId" value="7"/>
+   </properties>
+  </object>
+  <object id="20" x="448" y="352" width="64" height="64">
+   <properties>
+    <property name="neighbors" value="7,9,10"/>
+    <property name="squareId" value="8"/>
+   </properties>
+  </object>
+  <object id="21" x="544" y="352" width="64" height="64">
+   <properties>
+    <property name="neighbors" value="8"/>
+    <property name="squareId" value="9"/>
+   </properties>
+  </object>
+  <object id="22" x="448" y="448" width="64" height="64">
+   <properties>
+    <property name="neighbors" value="8,11"/>
+    <property name="squareId" value="10"/>
+   </properties>
+  </object>
+  <object id="24" x="256" y="352" width="64" height="64">
+   <properties>
+    <property name="neighbors" value="12,3"/>
+    <property name="squareId" value="13"/>
+   </properties>
+  </object>
+  <object id="25" x="256" y="448" width="64" height="64">
+   <properties>
+    <property name="neighbors" value="10,12"/>
+    <property name="squareId" value="11"/>
+   </properties>
+  </object>
+  <object id="26" x="352" y="448" width="64" height="64">
+   <properties>
+    <property name="neighbors" value="10,12"/>
+    <property name="squareId" value="11"/>
+   </properties>
+  </object>
+  <object id="27" x="256" y="256" width="64" height="64">
+   <properties>
+    <property name="neighbors" value="2,4,13"/>
+    <property name="squareId" value="3"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

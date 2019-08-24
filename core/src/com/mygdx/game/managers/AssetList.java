@@ -17,6 +17,8 @@ public enum AssetList {
 	UISKINIMG("ui/uiskin.png", Texture.class),
 	UISKINATL("ui/uiskin.atlas", TextureAtlas.class),
 	
+	BACKGROUND1("under_da_sea.jpg", Texture.class),
+    BLACK("black.png", Texture.class);
 	;
 	
 	//Enum constructor and methods.

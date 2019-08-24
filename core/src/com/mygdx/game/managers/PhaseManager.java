@@ -29,32 +29,14 @@ public class PhaseManager {
 	
 	public void preRound() {
 		
+		//sort toq according to speed of each active unit
 		toq.clear();
 		
 		for (UnitCard unit: ps.getActiveUnits()) {
 			toq.add(unit);
 		}
-		
-		//sort toq according to speed of each active unit
-		int j;
-		boolean flag = true;
-		UnitCard temp;
-		
-		while (flag) {
-			flag = false;
-			for(j = 0; j < toq.size() - 1; j++){
-				if(toq.get(j) != null && toq.get(j+1) != null){
-					
-					//TODO: account for speed ties and do stat buff stuff
-					if(toq.get(j).getBuffedStat(Stats.SPD) < toq.get(j + 1).getBuffedStat(Stats.SPD)){
-						temp = toq.get(j);
-						toq.set(j,toq.get(j+1));
-						toq.set(j+1,temp);
-						flag = true;
-					}
-				}
-			}
-		}
+
+		sortTOQ();
 		
 		//activate pre-round effects
 		
@@ -79,5 +61,27 @@ public class PhaseManager {
 		
 		//activate post-round effects
 		
+	}
+	
+	public void sortTOQ() {
+		int j;
+		boolean flag = true;
+		UnitCard temp;
+		
+		while (flag) {
+			flag = false;
+			for(j = 0; j < toq.size() - 1; j++){
+				if(toq.get(j) != null && toq.get(j+1) != null){
+					
+					//TODO: account for speed ties and do stat buff stuff
+					if(toq.get(j).getBuffedStat(Stats.SPD) < toq.get(j + 1).getBuffedStat(Stats.SPD)){
+						temp = toq.get(j);
+						toq.set(j,toq.get(j+1));
+						toq.set(j+1,temp);
+						flag = true;
+					}
+				}
+			}
+		}
 	}
 }
