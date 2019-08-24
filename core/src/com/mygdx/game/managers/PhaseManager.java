@@ -18,13 +18,17 @@ public class PhaseManager {
 	private ArrayList<UnitCard> toq;
 	private UnitCard currentUnit;
 	
+	private int roundNum;
+	
 	public PhaseManager(PlayState ps) {
 		this.ps = ps;
 		this.toq = new ArrayList<UnitCard>();
+		
 	}
 	
 	public void startofLevel() {
 		
+		roundNum = 0;
 	}
 	
 	public void preRound() {
@@ -44,6 +48,9 @@ public class PhaseManager {
 	}
 	
 	public void preTurn() {
+		
+		roundNum += 1;
+		
 		//pop off fastest fella
 		currentUnit = toq.get(0);
 		
@@ -84,4 +91,8 @@ public class PhaseManager {
 			}
 		}
 	}
+
+	public int getRoundNum() {
+		return roundNum;
+	}	
 }

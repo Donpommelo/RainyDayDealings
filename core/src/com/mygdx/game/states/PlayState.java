@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.RainyDayGame;
 import com.mygdx.game.cards.UnitCard;
@@ -17,10 +18,11 @@ import com.mygdx.game.inputs.PlayerController;
 import com.mygdx.game.managers.AssetList;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.TiledObjectManager;
+import com.mygdx.game.utils.CameraStyles;
 
 public class PlayState extends GameState {
 
-	private int roundNum;
+	
 	
 	//This is the player's controller that receives inputs
 	protected InputProcessor controller;
@@ -34,9 +36,25 @@ public class PlayState extends GameState {
 	
 	private Stage boardStage;
 	
+	//The current zoom of the camera
+	private float zoom;
+
+	//This is the zoom that the camera will lerp towards
+	protected float zoomDesired;
+	
+	//This is the entity that the camera tries to focus on
+	private Vector2 cameraTarget;
+	private int cameraXMove, cameraYMove = 0;
+	private int cameraMinX, cameraMinY, cameraMaxX, cameraMaxY;
+	
+	private final static float cameraSpeed = 15.0f;
+	private final static float zoomSpeed = 0.4f;
+	private final static float zoomMin = 0.5f;
+	private final static float zoomMax = 2.0f;
+	
+	
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
-		roundNum = 1;
 		
 		//load map
 		map = new TmxMapLoader().load("boards/test.tmx");
@@ -51,6 +69,15 @@ public class PlayState extends GameState {
 		this.black = RainyDayGame.assetManager.get(AssetList.BLACK.toString());
 		
 		controller = new PlayerController(this);
+		
+		cameraTarget = new Vector2(camera.position.x, camera.position.y);
+		zoom = 1.0f;
+		zoomDesired = 1.0f;
+		
+		cameraMinX = 0;
+		cameraMaxX = map.getProperties().get("width", Integer.class) * map.getProperties().get("tilewidth", Integer.class);
+		cameraMinY = 0;
+		cameraMaxY = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);;
 	}
 
 	@Override
@@ -110,8 +137,72 @@ public class PlayState extends GameState {
 		batch.end();
 	}
 
+	/**
+	 * This is called every update. This resets the camera zoom and makes it move towards a desired point (if camera target is not null).
+	 */
 	public void cameraUpdate() {
+		zoom = zoom + (zoomDesired - zoom) * 0.05f;
+		camera.zoom = zoom;
+		sprite.zoom = zoom;
 		
+		
+		
+		cameraTarget.set(obeyCameraBounds(cameraTarget.x + cameraXMove * cameraSpeed, cameraTarget.y + cameraYMove * cameraSpeed));
+		
+		CameraStyles.lerpToTarget(camera, cameraTarget);
+		CameraStyles.lerpToTarget(sprite, cameraTarget);
+	}
+	
+	/**
+	 * This sets the zoom of the camera to the input float (accounting for zoom limitations)
+	 */
+	public void setZoom(float incrementZoom) {
+		
+		float newZoom = zoomDesired + incrementZoom * zoomSpeed;
+		
+		if (newZoom < zoomMin) {
+			zoomDesired = zoomMin;
+		} else if (newZoom > zoomMax) {
+			zoomDesired = zoomMax;
+		} else {
+			zoomDesired = newZoom;
+		}
+	}
+	
+	public void setCamera(float x, float y, boolean lerp) {
+		Vector2 newCamera = obeyCameraBounds(x, y);
+		
+		cameraTarget.x = newCamera.x;
+		cameraTarget.y = newCamera.y;
+		
+		if (!lerp) {
+			camera.position.x = newCamera.x;
+			camera.position.y = newCamera.y;
+		}		
+	}
+	
+	public Vector2 obeyCameraBounds(float x, float y) {
+		
+		float newX = x;
+		float newY = y;
+		
+		if (x < cameraMinX) {
+			newX = cameraMinX;
+		}
+		
+		if (x > cameraMaxX) {
+			newX = cameraMaxX;
+		}
+		
+		if (y < cameraMinY) {
+			newY = cameraMinY;
+		}
+		
+		if (y > cameraMaxY) {
+			newY = cameraMaxY;
+		}
+		
+		return new Vector2(newX, newY);
 	}
 	
 	@Override
@@ -125,5 +216,13 @@ public class PlayState extends GameState {
 	
 	public Stage getBoardStage() {
 		return boardStage;
+	}
+
+	public void setCameraXMove(int cameraXMove) {
+		this.cameraXMove = cameraXMove;
+	}
+
+	public void setCameraYMove(int cameraYMove) {
+		this.cameraYMove = cameraYMove;
 	}
 }

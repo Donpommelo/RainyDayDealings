@@ -122,37 +122,45 @@ public class PlayerController implements InputProcessor {
 		if (keycode == PlayerAction.CAMERA_LEFT.getKey()) {
 			leftHeld = true;
 			if (!rightHeld) {
-				
+				ps.setCameraXMove(-1);
 			} else {
-				
+				ps.setCameraXMove(0);
 			}
 		}
 		
 		if (keycode == PlayerAction.CAMERA_RIGHT.getKey()) {
 			rightHeld = true;
 			if (!leftHeld) {
-				
+				ps.setCameraXMove(1);
 			} else {
-				
+				ps.setCameraXMove(0);
 			}
 		}
 		
 		if (keycode == PlayerAction.CAMERA_UP.getKey()) {
 			upHeld = true;
 			if (!downHeld) {
-				
+				ps.setCameraYMove(1);
 			} else {
-				
+				ps.setCameraYMove(0);
 			}
 		}
 		
 		if (keycode == PlayerAction.CAMERA_DOWN.getKey()) {
 			downHeld = true;
 			if (!upHeld) {
-				
+				ps.setCameraYMove(-1);
 			} else {
-				
+				ps.setCameraYMove(0);
 			}
+		}
+		
+		if (keycode == PlayerAction.ZOOM_IN.getKey()) {
+			ps.setZoom(-1);
+		}
+		
+		if (keycode == PlayerAction.ZOOM_OUT.getKey()) {
+			ps.setZoom(1);
 		}
 		
 		return false;
@@ -163,36 +171,36 @@ public class PlayerController implements InputProcessor {
 		if (keycode == PlayerAction.CAMERA_LEFT.getKey()) {
 			leftHeld = false;
 			if (rightHeld) {
-				
+				ps.setCameraXMove(1);
 			} else {
-				
+				ps.setCameraXMove(0);
 			}
 		}
 		
 		if (keycode == PlayerAction.CAMERA_RIGHT.getKey()) {
 			rightHeld = false;
 			if (leftHeld) {
-				
+				ps.setCameraXMove(-1);
 			} else {
-				
+				ps.setCameraXMove(0);
 			}
 		}
 		
 		if (keycode == PlayerAction.CAMERA_UP.getKey()) {
 			upHeld = false;
 			if (downHeld) {
-				
+				ps.setCameraYMove(-1);
 			} else {
-				
+				ps.setCameraYMove(0);
 			}
 		}
 		
 		if (keycode == PlayerAction.CAMERA_DOWN.getKey()) {
 			downHeld = false;
 			if (upHeld) {
-				
+				ps.setCameraYMove(1);
 			} else {
-				
+				ps.setCameraYMove(0);
 			}
 		}
 		
@@ -218,10 +226,7 @@ public class PlayerController implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		float x = Gdx.input.getDeltaX();
-	    float y = Gdx.input.getDeltaY();
-
-	    ps.camera.translate(-x,y);
+	    ps.setCamera(ps.camera.position.x - Gdx.input.getDeltaX(), ps.camera.position.y + Gdx.input.getDeltaY(), false);
 		return false;
 	}
 
