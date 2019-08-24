@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -34,6 +36,8 @@ public class RainyDayGame extends ApplicationAdapter {
 	//This is the Gamestate Manager. It manages the current game state.
 	private GameStateManager gsm;
 	
+	public static AssetManager assetManager;
+	
 	public static BitmapFont SYSTEM_FONT_UI, SYSTEM_FONT_SPRITE;
     public static Color DEFAULT_TEXT_COLOR;
  
@@ -62,7 +66,9 @@ public class RainyDayGame extends ApplicationAdapter {
 	    
 	    hud.zoom = 1 / BOX2DSCALE;
 	    
+	    assetManager = new AssetManager(new InternalFileHandleResolver());
 	    gsm = new GameStateManager(this);
+	    gsm.addSplashState(null);
 	}
 
 	@Override
