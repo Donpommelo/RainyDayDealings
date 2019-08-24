@@ -3,6 +3,8 @@ package com.mygdx.game.states;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.RainyDayGame;
 import com.mygdx.game.cards.UnitCard;
+import com.mygdx.game.inputs.PlayerController;
 import com.mygdx.game.managers.AssetList;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.TiledObjectManager;
@@ -19,6 +22,9 @@ public class PlayState extends GameState {
 
 	private int roundNum;
 	
+	//This is the player's controller that receives inputs
+	protected InputProcessor controller;
+		
 	//These process and store the map parsed from the Tiled file.
 	protected TiledMap map;
 	protected OrthogonalTiledMapRenderer tmr;
@@ -36,11 +42,15 @@ public class PlayState extends GameState {
 		map = new TmxMapLoader().load("boards/test.tmx");
 		tmr = new OrthogonalTiledMapRenderer(map);
 		boardStage = new Stage();
+		gsm.getApp();
+		boardStage.setViewport(RainyDayGame.viewportCamera);
 		TiledObjectManager.parseSquares(this, map.getLayers().get("square-layer").getObjects());
 		
 		//Init background image
 		this.bg = RainyDayGame.assetManager.get(AssetList.BACKGROUND1.toString());
 		this.black = RainyDayGame.assetManager.get(AssetList.BLACK.toString());
+		
+		controller = new PlayerController(this);
 	}
 
 	@Override
@@ -52,6 +62,25 @@ public class PlayState extends GameState {
 		
 		
 		app.newMenu(stage);
+		
+		resetController();
+	}
+	
+	/**
+	 * This method gives input to the player as well as the menu.
+	 * This is called when a play state is created.
+	 */
+	public void resetController() {
+		controller = new PlayerController(this);
+		
+		InputMultiplexer inputMultiplexer = new InputMultiplexer();
+		
+		inputMultiplexer.addProcessor(stage);
+		inputMultiplexer.addProcessor(boardStage);
+		
+		inputMultiplexer.addProcessor(controller);
+		
+		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 	
 	@Override

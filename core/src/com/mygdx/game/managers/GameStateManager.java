@@ -8,8 +8,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
 import com.mygdx.game.RainyDayGame;
 import com.mygdx.game.states.*;
+import com.mygdx.game.inputs.PlayerAction;
 
 public class GameStateManager {
 
@@ -23,6 +26,10 @@ public class GameStateManager {
 	private Skin skin;
 	private NinePatchDrawable dialogPatch, simplePatch;
 	
+	//Json reader here. Use this instead of creating new ones elsewhere.
+	public static Json json = new Json();
+	public static JsonReader reader = new JsonReader();
+		
 	//Not sure if this is a sensible thing to do, but we have an rng here so I don't need to make one whenever elsewhere
 	public static Random generator;
 		
@@ -40,6 +47,9 @@ public class GameStateManager {
 	public GameStateManager(RainyDayGame game) {
 		this.app = game;
 		this.states = new Stack<GameState>();
+		
+		//Load data from saves: hotkeys and unlocks
+		PlayerAction.retrieveKeys();
 		
 		generator = new Random();
 	}
