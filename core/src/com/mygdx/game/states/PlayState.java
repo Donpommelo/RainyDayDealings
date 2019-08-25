@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.RainyDayGame;
+import com.mygdx.game.cards.Team;
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.inputs.PlayerController;
 import com.mygdx.game.managers.AssetList;
@@ -52,6 +53,7 @@ public class PlayState extends GameState {
 	private final static float zoomMin = 0.5f;
 	private final static float zoomMax = 2.0f;
 	
+	private ArrayList<Team> teams;
 	
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
