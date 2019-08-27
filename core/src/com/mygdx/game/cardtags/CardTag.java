@@ -1,7 +1,7 @@
 package com.mygdx.game.cardtags;
 
-import com.mygdx.game.cards.Card;
 import com.mygdx.game.cards.UnitCard;
+import com.mygdx.game.stuff.Card;
 import com.mygdx.game.utils.CardTagProcTime;
 
 public class CardTag {

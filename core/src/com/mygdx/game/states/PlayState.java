@@ -13,12 +13,15 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.RainyDayGame;
-import com.mygdx.game.cards.Team;
+import com.mygdx.game.actors.HandActor;
+import com.mygdx.game.board.Square;
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.inputs.PlayerController;
 import com.mygdx.game.managers.AssetList;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.TiledObjectManager;
+import com.mygdx.game.stuff.Deck;
+import com.mygdx.game.stuff.Team;
 import com.mygdx.game.utils.CameraStyles;
 
 public class PlayState extends GameState {
@@ -54,6 +57,7 @@ public class PlayState extends GameState {
 	private final static float zoomMax = 2.0f;
 	
 	private ArrayList<Team> teams;
+	private HandActor playerHand;
 	
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
@@ -79,7 +83,11 @@ public class PlayState extends GameState {
 		cameraMinX = 0;
 		cameraMaxX = map.getProperties().get("width", Integer.class) * map.getProperties().get("tilewidth", Integer.class);
 		cameraMinY = 0;
-		cameraMaxY = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);;
+		cameraMaxY = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
+		
+		this.teams = new ArrayList<Team>();
+//		Deck tempDeck = new Deck(new ArrayList<Card>());
+//		teams.add(new Team(null, false));
 	}
 
 	@Override
@@ -88,7 +96,9 @@ public class PlayState extends GameState {
 			
 		};
 		
+		playerHand = new HandActor();
 		
+		stage.addActor(playerHand);
 		
 		app.newMenu(stage);
 		
@@ -213,11 +223,20 @@ public class PlayState extends GameState {
 	}
 	
 	public ArrayList<UnitCard> getActiveUnits() {
+		
+		for (Square square: TiledObjectManager.squares) {
+			
+		}
+		
 		return null;
 	}
 	
 	public Stage getBoardStage() {
 		return boardStage;
+	}
+
+	public ArrayList<Team> getTeams() {
+		return teams;
 	}
 
 	public void setCameraXMove(int cameraXMove) {

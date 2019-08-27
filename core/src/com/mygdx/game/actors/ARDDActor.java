@@ -3,6 +3,7 @@ package com.mygdx.game.actors;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.RainyDayGame;
 
 public class ARDDActor extends Actor {
 
@@ -11,19 +12,19 @@ public class ARDDActor extends Actor {
 	
 	private Polygon hitBox = null;
 	
-	public ARDDActor(AssetManager assetManager) {
+	public ARDDActor() {
 		super();
-		this.assetManager = assetManager;
+		this.assetManager = RainyDayGame.assetManager;
 	}
 	
-	public ARDDActor(AssetManager assetManager, int x, int y) {
-		this(assetManager);
+	public ARDDActor(int x, int y) {
+		this();
 		setX(x);
 		setY(y);
 	}
 	
-	public ARDDActor(AssetManager assetManager, int x, int y, int width, int height) {
-		this(assetManager, x, y);
+	public ARDDActor(int x, int y, int width, int height) {
+		this(x, y);
 		setWidth(width);
 		setHeight(height);
 		updateHitBox();

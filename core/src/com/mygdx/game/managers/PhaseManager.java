@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.stuff.Team;
 import com.mygdx.game.utils.Stats;
 
 /**
@@ -29,6 +30,8 @@ public class PhaseManager {
 	public void startofLevel() {
 		
 		roundNum = 0;
+		
+		preRound();
 	}
 	
 	public void preRound() {
@@ -37,14 +40,20 @@ public class PhaseManager {
 		toq.clear();
 		
 		for (UnitCard unit: ps.getActiveUnits()) {
-			toq.add(unit);
+			addToTOQ(unit);
+			
 		}
 
 		sortTOQ();
 		
 		//activate pre-round effects
 		
-		//preTurn
+		//draw cards
+		for (Team team: ps.getTeams()) {
+			team.preRoundDraw();
+		}
+		
+		preTurn();
 	}
 	
 	public void preTurn() {
@@ -67,6 +76,14 @@ public class PhaseManager {
 	public void postRound() {
 		
 		//activate post-round effects
+		
+	}
+	
+	public void addToTOQ(UnitCard unit) {
+		toq.add(unit);
+	}
+	
+	public void removeFromTOQ(UnitCard unit) {
 		
 	}
 	

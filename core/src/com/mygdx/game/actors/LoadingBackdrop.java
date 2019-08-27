@@ -1,6 +1,5 @@
 package com.mygdx.game.actors;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -20,8 +19,8 @@ private TextureAtlas atlas;
 	//width and height of image
 	private float width, height;
 	
-	public LoadingBackdrop(AssetManager assetManager) {
-		super(assetManager);
+	public LoadingBackdrop() {
+		super();
 		atlas = new TextureAtlas("ui/anchor_logo.atlas");
 		loading = new Animation<TextureRegion>(0.08f, atlas.findRegions("anchor_logo"));
 		

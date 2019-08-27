@@ -1,6 +1,5 @@
 package com.mygdx.game.actors;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -20,8 +19,8 @@ public class Text extends ARDDActor {
 
 	protected float scale = 1.0f;
 	
-	public Text(AssetManager assetManager, String text, int x, int y) {
-		super(assetManager, x, y);
+	public Text(String text, int x, int y) {
+		super(x, y);
 		this.text = text;
 		font = RainyDayGame.SYSTEM_FONT_UI;
 		color = RainyDayGame.DEFAULT_TEXT_COLOR;
@@ -29,8 +28,8 @@ public class Text extends ARDDActor {
 		updateHitBox();
 	}
 	
-	public Text(AssetManager assetManager, String text, int x, int y, Color color) {
-		this(assetManager, text, x, y);
+	public Text(String text, int x, int y, Color color) {
+		this(text, x, y);
 		this.color = color;
 	}
 	

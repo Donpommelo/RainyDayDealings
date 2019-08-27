@@ -42,8 +42,8 @@ public class TitleState extends GameState {
 	public void show() {
 		stage = new Stage() {
 			{
-				addActor(new TitleBackdrop(RainyDayGame.assetManager));
-				addActor(new MenuWindow(RainyDayGame.assetManager, gsm, RainyDayGame.CONFIG_WIDTH - width - xOffset, 0, width, height));
+				addActor(new TitleBackdrop());
+				addActor(new MenuWindow(gsm, RainyDayGame.CONFIG_WIDTH - width - xOffset, 0, width, height));
 				
 				table = new Table();
 				table.setLayoutEnabled(true);
@@ -51,13 +51,13 @@ public class TitleState extends GameState {
 				table.setSize(width, height);
 				addActor(table);
 				
-				playOption = new Text(RainyDayGame.assetManager, "PLAY", 0, 0, Color.BLACK);
+				playOption = new Text("PLAY", 0, 0, Color.BLACK);
 				playOption.setScale(0.5f);
 				
-				settingOption = new Text(RainyDayGame.assetManager, "SETTINGS", 0, 0, Color.BLACK);
+				settingOption = new Text("SETTINGS", 0, 0, Color.BLACK);
 				settingOption.setScale(0.5f);
 				
-				exitOption = new Text(RainyDayGame.assetManager, "EXIT", 0, 0, Color.BLACK);
+				exitOption = new Text("EXIT", 0, 0, Color.BLACK);
 				exitOption.setScale(0.5f);
 				
 				//Play Option plays the game

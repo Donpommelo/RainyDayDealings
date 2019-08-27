@@ -2,9 +2,9 @@ package com.mygdx.game.managers;
 
 import java.util.ArrayList;
 
-import com.mygdx.game.cards.Card;
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.cardtags.CardTag;
+import com.mygdx.game.stuff.Card;
 import com.mygdx.game.utils.CardTagProcTime;
 
 public class EffectManager {

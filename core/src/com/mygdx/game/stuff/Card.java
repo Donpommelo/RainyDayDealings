@@ -1,7 +1,8 @@
-package com.mygdx.game.cards;
+package com.mygdx.game.stuff;
 
 import java.util.ArrayList;
 
+import com.mygdx.game.actors.CardActor;
 import com.mygdx.game.cardtags.CardTag;
 
 public class Card {
@@ -11,6 +12,7 @@ public class Card {
 	private ArrayList<CardTag> startTags;
 	private ArrayList<CardTag> currentTags;
 	
+	private CardActor cardActor;
 	
 	public Card(String name, String descr, int rainCost, CardTag... tags) {
 		this.name = name;
@@ -30,5 +32,15 @@ public class Card {
 	
 	public String getCardText() {
 		return "";
+	}
+
+
+	public CardActor getCardActor() {
+		return cardActor;
+	}
+
+
+	public void setCardActor(CardActor cardActor) {
+		this.cardActor = cardActor;
 	}
 }

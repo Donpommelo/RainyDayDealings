@@ -1,6 +1,5 @@
 package com.mygdx.game.actors;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.RainyDayGame;
@@ -10,8 +9,8 @@ public class TitleBackdrop extends ARDDActor {
 
 	private Texture backgroundTexture;
 	
-	public TitleBackdrop(AssetManager assetManager) {
-		super(assetManager);
+	public TitleBackdrop() {
+		super();
 		backgroundTexture = getAssetManager().get(AssetList.TITLE_CARD.toString());
 		backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 	}

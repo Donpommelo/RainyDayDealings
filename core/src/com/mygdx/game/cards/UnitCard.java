@@ -1,6 +1,7 @@
 package com.mygdx.game.cards;
 
 import com.mygdx.game.cardtags.CardTag;
+import com.mygdx.game.stuff.Card;
 import com.mygdx.game.utils.Stats;
 
 public class UnitCard extends Card{	
