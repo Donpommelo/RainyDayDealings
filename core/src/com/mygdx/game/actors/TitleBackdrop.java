@@ -11,7 +11,7 @@ public class TitleBackdrop extends ARDDActor {
 	
 	public TitleBackdrop() {
 		super();
-		backgroundTexture = getAssetManager().get(AssetList.TITLE_CARD.toString());
+		backgroundTexture = RainyDayGame.assetManager.get(AssetList.TITLE_CARD.toString());
 		backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 	}
 	

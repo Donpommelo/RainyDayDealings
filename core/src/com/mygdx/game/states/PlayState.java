@@ -13,19 +13,22 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.RainyDayGame;
+import com.mygdx.game.actors.ActionLog;
 import com.mygdx.game.actors.HandActor;
+import com.mygdx.game.actors.TOQActor;
 import com.mygdx.game.board.Square;
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.inputs.PlayerController;
 import com.mygdx.game.managers.AssetList;
 import com.mygdx.game.managers.GameStateManager;
+import com.mygdx.game.managers.PhaseManager;
 import com.mygdx.game.managers.TiledObjectManager;
+import com.mygdx.game.stuff.Action;
 import com.mygdx.game.stuff.Deck;
 import com.mygdx.game.stuff.Team;
 import com.mygdx.game.utils.CameraStyles;
 
 public class PlayState extends GameState {
-
 	
 	
 	//This is the player's controller that receives inputs
@@ -57,7 +60,15 @@ public class PlayState extends GameState {
 	private final static float zoomMax = 2.0f;
 	
 	private ArrayList<Team> teams;
-	private HandActor playerHand;
+	private HandActor handActor;
+	private TOQActor toqActor;
+	
+	private ActionLog log;
+	private ArrayList<Action> actionQueue;
+	private Action currentAction;
+	private float actionTimer;
+	
+	private PhaseManager pm;
 	
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
@@ -88,17 +99,27 @@ public class PlayState extends GameState {
 		this.teams = new ArrayList<Team>();
 //		Deck tempDeck = new Deck(new ArrayList<Card>());
 //		teams.add(new Team(null, false));
+		
+		actionQueue = new ArrayList<Action>();
+		actionTimer = 0.0f;
+		
+		pm = new PhaseManager(this);
+		pm.startofLevel();
 	}
 
 	@Override
 	public void show() {
 		stage = new Stage() {
-			
+			{
+				handActor = new HandActor();
+				toqActor = new TOQActor();
+				
+				addActor(handActor);
+				addActor(toqActor);
+			}
 		};
+		log = new ActionLog(this);
 		
-		playerHand = new HandActor();
-		
-		stage.addActor(playerHand);
 		
 		app.newMenu(stage);
 		
@@ -114,16 +135,34 @@ public class PlayState extends GameState {
 		
 		InputMultiplexer inputMultiplexer = new InputMultiplexer();
 		
-		inputMultiplexer.addProcessor(stage);
-		inputMultiplexer.addProcessor(boardStage);
-		
 		inputMultiplexer.addProcessor(controller);
+		inputMultiplexer.addProcessor(boardStage);
+		inputMultiplexer.addProcessor(stage);
+
 		
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 	
 	@Override
 	public void update(float delta) {
+		
+		if (currentAction != null) {
+			actionTimer -= delta;
+			
+			if (actionTimer <= 0.0f) {
+				currentAction.postAction();
+				currentAction = null;
+			}
+		} else if (!actionQueue.isEmpty()) {
+			
+			currentAction = actionQueue.remove(0);
+			
+			currentAction.preAction();
+			actionTimer = currentAction.getDuration();
+			
+			log.addAction(currentAction.getText());
+		}
+		
 		boardStage.act();
 		cameraUpdate();
 	}
@@ -145,6 +184,8 @@ public class PlayState extends GameState {
 		
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		boardStage.getViewport().apply();
+		boardStage.getBatch().setColor(1, 1, 1, 1);
 		boardStage.draw();
 		batch.end();
 	}
@@ -222,6 +263,10 @@ public class PlayState extends GameState {
 		
 	}
 	
+	public void addAction(Action action) {
+		actionQueue.add(action);
+	}
+	
 	public ArrayList<UnitCard> getActiveUnits() {
 		
 		for (Square square: TiledObjectManager.squares) {
@@ -246,4 +291,12 @@ public class PlayState extends GameState {
 	public void setCameraYMove(int cameraYMove) {
 		this.cameraYMove = cameraYMove;
 	}
+
+	public HandActor getHandActor() {
+		return handActor;
+	}
+
+	public TOQActor getToqActor() {
+		return toqActor;
+	}	
 }

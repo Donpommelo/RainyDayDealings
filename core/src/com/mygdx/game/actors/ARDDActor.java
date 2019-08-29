@@ -29,14 +29,6 @@ public class ARDDActor extends Actor {
 		setHeight(height);
 		updateHitBox();
 	}
-
-	public AssetManager getAssetManager() {
-		return assetManager;
-	}
-
-	public void setAssetManager(AssetManager assetManager) {
-		this.assetManager = assetManager;
-	}
 	
 	public Polygon getHitBox() {
 		return hitBox;

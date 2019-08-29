@@ -38,4 +38,9 @@ public class TOQActor extends ARDDActor {
 		units.remove(unit);	
 		group.center();
 	}
+	
+	public void clearUnits() {
+		units.clear();
+		group.clear();
+	}
 }

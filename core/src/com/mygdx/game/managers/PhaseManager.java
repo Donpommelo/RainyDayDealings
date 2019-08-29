@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.stuff.Action;
 import com.mygdx.game.stuff.Team;
 import com.mygdx.game.utils.Stats;
 
@@ -36,46 +37,89 @@ public class PhaseManager {
 	
 	public void preRound() {
 		
-		//sort toq according to speed of each active unit
-		toq.clear();
+		roundNum++;
 		
-		for (UnitCard unit: ps.getActiveUnits()) {
-			addToTOQ(unit);
+		ps.addAction(new Action("FUG", 0.5f) {
 			
-		}
+			@Override
+			public void preAction() {
+				
+				//sort toq according to speed of each active unit
+				toq.clear();
+				ps.getToqActor().clearUnits();
+				
+//				for (UnitCard unit: ps.getActiveUnits()) {
+//					addToTOQ(unit);
+//					
+//				}
 
-		sortTOQ();
+				sortTOQ();
+			}
+		});
+		
+		
+		
+		for (UnitCard unit: toq) {
+			ps.getToqActor().addUnit(unit);
+		}
+		
 		
 		//activate pre-round effects
 		
-		//draw cards
-		for (Team team: ps.getTeams()) {
-			team.preRoundDraw();
-		}
+		ps.addAction(new Action("FUG fugfugfugfugfug", 0.5f) {
+			
+			@Override
+			public void preAction() {
+				
+				//draw cards
+				for (Team team: ps.getTeams()) {
+					team.preRoundDraw();
+				}
+			}
+		});
+		
+		
 		
 		preTurn();
 	}
 	
 	public void preTurn() {
 		
-		roundNum += 1;
-		
-		//pop off fastest fella
-		currentUnit = toq.get(0);
-		
+		//if toq is empty, postRound. Otherwise, preTurn again.
+		if (toq.isEmpty()) {
+			postRound();
+		} else {
+			//pop off fastest fella
+			currentUnit = toq.get(0);
+			
+			toq.remove(0);
+			ps.getToqActor().removeUnit(currentUnit);
+			
+			
+		}
+	}
+	
+	public void makeTurn(UnitCard unit) {
 		//check fella's team. if cpu, do cpu stuff.
 		//otherwise, player can do stuff
-		//defer to turn manager
+		
+		if (unit.getTeam().isPlayer()) {
+			
+		} else {
+			//enemy ai but for now passing turn always.
+			postTurn();
+		}
 		
 	}
 	
 	public void postTurn() {
-		//if toq is empty, postRound. Otherwise, preTurn again.
+		//post turn effects.
 	}
 	
 	public void postRound() {
 		
 		//activate post-round effects
+		
 		
 	}
 	

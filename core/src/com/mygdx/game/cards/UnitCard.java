@@ -2,16 +2,18 @@ package com.mygdx.game.cards;
 
 import com.mygdx.game.cardtags.CardTag;
 import com.mygdx.game.stuff.Card;
+import com.mygdx.game.stuff.Team;
 import com.mygdx.game.utils.Stats;
 
 public class UnitCard extends Card{	
 	
-	
+	private Team team;
 	private int Hp, Pow, Def, Spd;
 	private int currentHp, currentRain, satLevel, highestSatLevel;
 	
-	public UnitCard(String name, String descr, int rainCost, int hp, int pow, int def, int spd, CardTag... tags) {
+	public UnitCard(Team team, String name, String descr, int rainCost, int hp, int pow, int def, int spd, CardTag... tags) {
 		super(name, descr, rainCost, tags);
+		this.team = team;
 		this.Hp = hp;
 		this.Pow = pow;
 		this.Def = def;
@@ -44,4 +46,8 @@ public class UnitCard extends Card{
 		
 		return baseStat;
 	}
+
+	public Team getTeam() {
+		return team;
+	}	
 }

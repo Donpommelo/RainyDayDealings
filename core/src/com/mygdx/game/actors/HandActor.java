@@ -10,8 +10,8 @@ public class HandActor extends ARDDActor {
 	private HorizontalGroup group;
 	private ArrayList<Card> cards;
 	
-	private final static int handX = 25;
-	private final static int handY = 0;
+	private final static int handX =100;
+	private final static int handY = 100;
 	private final static int handWidth = 500;
 	private final static int handHeight = 100;
 	private final static float handSpace = -25.0f;

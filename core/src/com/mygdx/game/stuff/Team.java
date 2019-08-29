@@ -70,4 +70,8 @@ public class Team {
 			drawTopCard(null);
 		}
 	}
+
+	public boolean isPlayer() {
+		return player;
+	}	
 }
