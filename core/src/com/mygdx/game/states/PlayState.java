@@ -20,6 +20,7 @@ import com.mygdx.game.board.Square;
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.inputs.PlayerController;
 import com.mygdx.game.managers.AssetList;
+import com.mygdx.game.managers.EffectManager;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.PhaseManager;
 import com.mygdx.game.managers.TiledObjectManager;
@@ -68,6 +69,7 @@ public class PlayState extends GameState {
 	private Action currentAction;
 	private float actionTimer;
 	
+	private EffectManager em;
 	private PhaseManager pm;
 	
 	public PlayState(GameStateManager gsm) {
@@ -103,6 +105,7 @@ public class PlayState extends GameState {
 		actionQueue = new ArrayList<Action>();
 		actionTimer = 0.0f;
 		
+		em = new EffectManager(this);
 		pm = new PhaseManager(this);
 		pm.startofLevel();
 	}
@@ -112,14 +115,13 @@ public class PlayState extends GameState {
 		stage = new Stage() {
 			{
 				handActor = new HandActor();
-				toqActor = new TOQActor();
+				
 				
 				addActor(handActor);
-				addActor(toqActor);
 			}
 		};
 		log = new ActionLog(this);
-		
+		toqActor = new TOQActor(this);
 		
 		app.newMenu(stage);
 		
@@ -298,5 +300,13 @@ public class PlayState extends GameState {
 
 	public TOQActor getToqActor() {
 		return toqActor;
+	}
+
+	public EffectManager getEm() {
+		return em;
+	}
+
+	public PhaseManager getPm() {
+		return pm;
 	}	
 }

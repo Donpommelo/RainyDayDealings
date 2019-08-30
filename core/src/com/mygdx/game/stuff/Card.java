@@ -25,7 +25,6 @@ public class Card {
 		}
 	}
 	
-	
 	public void onPlay() {
 		
 	}
