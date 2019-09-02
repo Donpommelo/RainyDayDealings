@@ -11,8 +11,8 @@ public class UnitCard extends Card{
 	private int Hp, Pow, Def, Spd;
 	private int currentHp, currentRain, satLevel, highestSatLevel;
 	
-	public UnitCard(Team team, String name, String descr, int rainCost, int hp, int pow, int def, int spd, CardTag... tags) {
-		super(name, descr, rainCost, tags);
+	public UnitCard(Team team, String name, int rainCost, int hp, int pow, int def, int spd, CardTag... tags) {
+		super(name, rainCost, tags);
 		this.team = team;
 		this.Hp = hp;
 		this.Pow = pow;

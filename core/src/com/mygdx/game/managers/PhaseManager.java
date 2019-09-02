@@ -32,6 +32,18 @@ public class PhaseManager {
 		
 		roundNum = 0;
 		
+		ps.addAction(new Action("FUG fugfugfugfugfug", 0.5f) {
+			
+			@Override
+			public void preAction() {
+				
+				//draw cards
+				for (Team team: ps.getTeams()) {
+					team.firstRoundDraw();
+				}
+			}
+		});
+		
 		preRound();
 	}
 	

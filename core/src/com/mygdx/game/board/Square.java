@@ -16,7 +16,6 @@ public class Square {
 	public Square(PlayState ps, int x, int y, int width, int height) {
 		this.ps = ps;
 		actor = new SquareActor(x, y, width, height);
-		actor.setDebug(true);
 		ps.getBoardStage().addActor(actor);
 	}
 	

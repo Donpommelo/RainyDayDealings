@@ -99,8 +99,9 @@ public class PlayState extends GameState {
 		cameraMaxY = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
 		
 		this.teams = new ArrayList<Team>();
-//		Deck tempDeck = new Deck(new ArrayList<Card>());
-//		teams.add(new Team(null, false));
+		Deck tempDeck = new Deck();
+		teams.add(new Team(this, tempDeck, false));
+		teams.add(new Team(this, tempDeck, true));
 		
 		actionQueue = new ArrayList<Action>();
 		actionTimer = 0.0f;
@@ -114,13 +115,14 @@ public class PlayState extends GameState {
 	public void show() {
 		stage = new Stage() {
 			{
-				handActor = new HandActor();
 				
 				
-				addActor(handActor);
+				
+				
 			}
 		};
 		log = new ActionLog(this);
+		handActor = new HandActor(this);
 		toqActor = new TOQActor(this);
 		
 		app.newMenu(stage);

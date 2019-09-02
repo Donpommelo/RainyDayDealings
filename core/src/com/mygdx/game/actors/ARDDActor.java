@@ -15,6 +15,7 @@ public class ARDDActor extends Actor {
 	public ARDDActor() {
 		super();
 		this.assetManager = RainyDayGame.assetManager;
+		setDebug(true);
 	}
 	
 	public ARDDActor(int x, int y) {

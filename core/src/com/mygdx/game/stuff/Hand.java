@@ -19,12 +19,20 @@ public class Hand {
 	
 	public void addCard(Card card) {
 		cards.add(card);
+		
 		//add cardActor to ui
+		if (player) {
+			ps.getHandActor().addCard(card);
+		}		
 	}
 	
 	public void removeCard(Card card) {
 		cards.remove(card);
+		
 		//remove cardActor from ui
+		if (player) {
+			ps.getHandActor().removeCard(card);
+		}
 	}
 
 	public ArrayList<Card> getCards() {
