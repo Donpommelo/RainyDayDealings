@@ -22,7 +22,7 @@ public class Hand {
 		
 		//add cardActor to ui
 		if (player) {
-			ps.getHandActor().addCard(card);
+			ps.getHandActor().createCard(card);
 		}		
 	}
 	
@@ -31,7 +31,7 @@ public class Hand {
 		
 		//remove cardActor from ui
 		if (player) {
-			ps.getHandActor().removeCard(card);
+			ps.getHandActor().deleteCard(card);
 		}
 	}
 

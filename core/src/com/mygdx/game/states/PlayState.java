@@ -72,6 +72,8 @@ public class PlayState extends GameState {
 	private EffectManager em;
 	private PhaseManager pm;
 	
+	private boolean dragToScroll;
+	
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
 		
@@ -92,6 +94,8 @@ public class PlayState extends GameState {
 		cameraTarget = new Vector2(camera.position.x, camera.position.y);
 		zoom = 1.0f;
 		zoomDesired = 1.0f;
+		
+		dragToScroll = true;
 		
 		cameraMinX = 0;
 		cameraMaxX = map.getProperties().get("width", Integer.class) * map.getProperties().get("tilewidth", Integer.class);
@@ -202,8 +206,6 @@ public class PlayState extends GameState {
 		camera.zoom = zoom;
 		sprite.zoom = zoom;
 		
-		
-		
 		cameraTarget.set(obeyCameraBounds(cameraTarget.x + cameraXMove * cameraSpeed, cameraTarget.y + cameraYMove * cameraSpeed));
 		
 		CameraStyles.lerpToTarget(camera, cameraTarget);
@@ -310,5 +312,14 @@ public class PlayState extends GameState {
 
 	public PhaseManager getPm() {
 		return pm;
+	}
+
+	public boolean isDragToScroll() {
+		return dragToScroll;
+	}
+
+	public void setDragToScroll(boolean dragToScroll) {
+		this.dragToScroll = dragToScroll;
 	}	
+	
 }

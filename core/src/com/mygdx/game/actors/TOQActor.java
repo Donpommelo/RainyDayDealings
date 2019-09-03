@@ -26,7 +26,7 @@ public class TOQActor {
 	}
 
 	public void addUnit(UnitCard unit) {
-		CardActor cardActor = new CardActor(unit);
+		CardActor cardActor = new CardActor(ps, unit);
 		group.addActor(cardActor);
 		units.add(unit);
 		group.center();

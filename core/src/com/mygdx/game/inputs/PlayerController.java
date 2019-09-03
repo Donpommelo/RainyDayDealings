@@ -226,7 +226,9 @@ public class PlayerController implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-	    ps.setCamera(ps.camera.position.x - Gdx.input.getDeltaX(), ps.camera.position.y + Gdx.input.getDeltaY(), false);
+		if (ps.isDragToScroll()) {
+			ps.setCamera(ps.camera.position.x - Gdx.input.getDeltaX(), ps.camera.position.y + Gdx.input.getDeltaY(), false);
+		}
 		return false;
 	}
 
