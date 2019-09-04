@@ -3,21 +3,26 @@ package com.mygdx.game.stuff;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.mygdx.game.states.PlayState;
+
 public class Deck {
 
+	private PlayState ps;
 	private ArrayList<Card> cards;
 	
-	public Deck(ArrayList<Card> cards) {
+	public Deck(PlayState ps, ArrayList<Card> cards) {
+		this.ps = ps;
 		this.cards = cards;
 	}
 	
-	public Deck() {
+	public Deck(PlayState ps) {
+		this.ps = ps;
 		this.cards = new ArrayList<Card>();
 		
 		for (int i = 0; i < 10; i++) {
-			cards.add(new Card("FUG", 0));
-			cards.add(new Card("FRIG", 1));
-			cards.add(new Card("FARQUAD", 2));
+			cards.add(new Card(ps, "FUG", 0));
+			cards.add(new Card(ps, "FRIG", 1));
+			cards.add(new Card(ps, "FARQUAD", 2));
 		}
 	}
 	

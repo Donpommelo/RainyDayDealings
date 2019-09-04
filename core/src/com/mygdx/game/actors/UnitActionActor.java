@@ -1,8 +1,11 @@
 package com.mygdx.game.actors;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.states.TitleState;
 
 public class UnitActionActor {
 
@@ -21,13 +24,41 @@ public class UnitActionActor {
 		
 		title = new Text("", 0, 0);
 		title.setScale(scale);
+		
+		
 		move = new Text("MOVE", 0, 0);
 		move.setScale(scale);
+		
+		move.addListener(new ClickListener() {
+			
+			@Override
+	        public void clicked(InputEvent e, float x, float y) {
+				//move
+	        }
+	    });
+		
 		skill = new Text("SKILL", 0, 0);
 		skill.setScale(scale);
+		
+		skill.addListener(new ClickListener() {
+			
+			@Override
+	        public void clicked(InputEvent e, float x, float y) {
+				//skill
+	        }
+	    });
+
 		endTurn = new Text("END TURN", 0 ,0);
 		endTurn.setScale(scale);
 		
+		endTurn.addListener(new ClickListener() {
+			
+			@Override
+	        public void clicked(InputEvent e, float x, float y) {
+				//end turn
+	        }
+	    });
+
 		table.add(title).row();
 		table.add(move).row();
 		table.add(skill).row();

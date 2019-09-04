@@ -1,6 +1,7 @@
 package com.mygdx.game.stuff;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.states.PlayState;
@@ -24,26 +25,28 @@ public class Team {
 		this.ps = ps;
 		this.deck = startingDeck;
 		this.eventDeck = eventDeck;
-		this.trashDeck = new Deck();
+		this.trashDeck = new Deck(ps);
 		this.hand = new Hand(ps, player);
 		
 		this.startingUnits = startingUnits;
 		
 		deck.shuffleDeck();
 		
-		this.teamDummy = new UnitCard(this, "dummy", 0, 0, 0, 0, 0);
+		this.teamDummy = new UnitCard(ps, this, "dummy", 0, 0, 0, 0, 0);
 	}
 	
 	public Team(PlayState ps, Deck startingDeck, boolean player) {
 		this.ps = ps;
 		this.deck = startingDeck;
-		this.trashDeck = new Deck();
+		this.trashDeck = new Deck(ps);
 		this.player = player;
 		this.hand = new Hand(ps, player);
 		
+		this.startingUnits = new ArrayList<UnitCard>(Arrays.asList(new UnitCard(ps, this), new UnitCard(ps, this)));
+		
 		deck.shuffleDeck();
 		
-		this.teamDummy = new UnitCard(this, "dummy", 0, 0, 0, 0, 0);
+		this.teamDummy = new UnitCard(ps, this, "dummy", 0, 0, 0, 0, 0);
 	}
 	
 	public void drawTopCard(UnitCard drawer) {
@@ -97,5 +100,9 @@ public class Team {
 
 	public boolean isPlayer() {
 		return player;
+	}
+
+	public ArrayList<UnitCard> getStartingUnits() {
+		return startingUnits;
 	}	
 }

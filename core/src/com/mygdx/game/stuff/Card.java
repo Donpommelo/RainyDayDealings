@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import com.mygdx.game.actors.CardActor;
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.cardtags.CardTag;
+import com.mygdx.game.states.PlayState;
 
 public class Card {
 
+	protected PlayState ps;
 	private String name;
 	private int rainCost;
 	private ArrayList<CardTag> startTags;
@@ -15,7 +17,8 @@ public class Card {
 	
 	private CardActor cardActor;
 	
-	public Card(String name, int rainCost, CardTag... tags) {
+	public Card(PlayState ps, String name, int rainCost, CardTag... tags) {
+		this.ps = ps;
 		this.name = name;
 		this.rainCost = rainCost;
 		

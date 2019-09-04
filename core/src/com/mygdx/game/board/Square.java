@@ -3,6 +3,7 @@ package com.mygdx.game.board;
 import java.util.ArrayList;
 
 import com.mygdx.game.actors.SquareActor;
+import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.states.PlayState;
 
 public class Square {
@@ -10,6 +11,7 @@ public class Square {
 	
 	private PlayState ps;
 	private ArrayList<Square> neighbors;
+	private UnitCard occupant;
 	
 	private SquareActor actor;
 	
@@ -21,5 +23,17 @@ public class Square {
 	
 	public void addNeighbor(Square neighbor) {
 		neighbors.add(neighbor);
+	}
+
+	public UnitCard getOccupant() {
+		return occupant;
+	}
+
+	public void setOccupant(UnitCard occupant) {
+		this.occupant = occupant;
+	}
+
+	public SquareActor getActor() {
+		return actor;
 	}
 }

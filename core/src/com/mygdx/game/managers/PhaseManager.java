@@ -60,21 +60,17 @@ public class PhaseManager {
 				toq.clear();
 				ps.getToqActor().clearUnits();
 				
-//				for (UnitCard unit: ps.getActiveUnits()) {
-//					addToTOQ(unit);
-//					
-//				}
+				for (UnitCard unit: ps.getActiveUnits()) {
+					addToTOQ(unit);
+				}
 
 				sortTOQ();
+				
+				for (UnitCard unit: toq) {
+					ps.getToqActor().addUnit(unit);
+				}
 			}
 		});
-		
-		
-		
-		for (UnitCard unit: toq) {
-			ps.getToqActor().addUnit(unit);
-		}
-		
 		
 		//activate pre-round effects
 		
@@ -95,13 +91,11 @@ public class PhaseManager {
 	
 	public void preTurn() {
 		
-		//if toq is empty, postRound. Otherwise, preTurn again.
+		//pop off fastest fella
 		if (toq.isEmpty()) {
 			postRound();
 		} else {
-			//pop off fastest fella
 			currentUnit = toq.remove(0);
-			
 			ps.getToqActor().removeUnit(currentUnit);
 			ps.getActionActor().switchUnit(currentUnit);
 		}
@@ -109,13 +103,17 @@ public class PhaseManager {
 	
 	public void postTurn() {
 		//post turn effects.
+		
+		if (toq.isEmpty()) {
+			postRound();
+		}
 	}
 	
 	public void postRound() {
 		
 		//activate post-round effects
 		
-		preRound();
+//		preRound();
 	}
 	
 	public void addToTOQ(UnitCard unit) {
@@ -146,6 +144,10 @@ public class PhaseManager {
 				}
 			}
 		}
+	}
+	
+	public ArrayList<UnitCard> getToq() {
+		return toq;
 	}
 
 	public int getRoundNum() {

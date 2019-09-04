@@ -105,7 +105,7 @@ public class PlayState extends GameState {
 		cameraMaxY = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
 		
 		this.teams = new ArrayList<Team>();
-		Deck tempDeck = new Deck();
+		Deck tempDeck = new Deck(this);
 		teams.add(new Team(this, tempDeck, false));
 		teams.add(new Team(this, tempDeck, true));
 		
@@ -114,6 +114,8 @@ public class PlayState extends GameState {
 		
 		em = new EffectManager(this);
 		pm = new PhaseManager(this);
+		
+		setStartingLocations();
 		pm.startofLevel();
 	}
 
@@ -276,13 +278,31 @@ public class PlayState extends GameState {
 		actionQueue.add(action);
 	}
 	
+	public void setStartingLocations() {
+		for (Team team: teams) {
+			if (team.isPlayer()) {
+				team.getStartingUnits().get(0).moveSquare(TiledObjectManager.starting.get("player1"));
+				team.getStartingUnits().get(1).moveSquare(TiledObjectManager.starting.get("player2"));
+//				team.getStartingUnits().get(2).moveSquare(TiledObjectManager.starting.get("player3"));
+//				team.getStartingUnits().get(3).moveSquare(TiledObjectManager.starting.get("player4"));
+			} else {
+				team.getStartingUnits().get(0).moveSquare(TiledObjectManager.starting.get("enemy1"));
+				team.getStartingUnits().get(1).moveSquare(TiledObjectManager.starting.get("enemy2"));
+			}
+		}
+	}
+	
 	public ArrayList<UnitCard> getActiveUnits() {
 		
+		ArrayList<UnitCard> activeUnits = new ArrayList<UnitCard>();
+		
 		for (Square square: TiledObjectManager.squares) {
-			
+			if (square.getOccupant() != null) {
+				activeUnits.add(square.getOccupant());
+			}
 		}
 		
-		return null;
+		return activeUnits;
 	}
 	
 	public Stage getBoardStage() {

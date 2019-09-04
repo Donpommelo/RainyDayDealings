@@ -16,12 +16,14 @@ public class TiledObjectManager {
 	public static ArrayList<Square> squares = new ArrayList<Square>();
 	public static Map<Square, String> neighboring = new HashMap<Square, String>();
 	public static Map<String, Square> neighbored = new HashMap<String, Square>();
-	
+	public static Map<String, Square> starting = new HashMap<String, Square>();
+
 	public static void parseSquares(PlayState ps, MapObjects objects) {
 		
 		squares.clear();
 		neighboring.clear();
 		neighbored.clear();
+		starting.clear();
 		
 		for(MapObject object : objects) {
 			
@@ -32,8 +34,16 @@ public class TiledObjectManager {
 				Square newSquare = new Square(ps, (int)(rect.x), (int)(rect.y), (int)rect.width, (int)rect.height);
 				
 				squares.add(newSquare);
-				neighboring.put(newSquare, object.getProperties().get("neighbors", String.class));
-				neighbored.put(object.getProperties().get("squareID", String.class), newSquare);
+				
+				if (object.getProperties().get("neighbors", String.class) != null) {
+					neighboring.put(newSquare, object.getProperties().get("neighbors", String.class));
+				}
+				if (object.getProperties().get("squareId", String.class) != null) {
+					neighbored.put(object.getProperties().get("squareID", String.class), newSquare);
+				}
+				if (object.getProperties().get("startId", String.class) != null) {
+					starting.put(object.getProperties().get("startId", String.class), newSquare);
+				}
 			}
 		}
 	}
