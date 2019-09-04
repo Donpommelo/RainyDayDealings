@@ -49,7 +49,6 @@ public class CardActor extends ARDDActor {
 						inHand = true;
 						playstate.getHandActor().addCardToHand(lastIndex, me);
 					}
-					
 				}
 			}
 			

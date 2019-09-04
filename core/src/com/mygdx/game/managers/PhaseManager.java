@@ -22,6 +22,8 @@ public class PhaseManager {
 	
 	private int roundNum;
 	
+	private final static float actionDurationTemp = 2.0f;
+	
 	public PhaseManager(PlayState ps) {
 		this.ps = ps;
 		this.toq = new ArrayList<UnitCard>();
@@ -32,10 +34,12 @@ public class PhaseManager {
 		
 		roundNum = 0;
 		
-		ps.addAction(new Action("Level start", 0.5f) {
+		ps.addAction(new Action("level start!", actionDurationTemp, true) {
 			
 			@Override
 			public void preAction() {
+				
+				//TODO: Start of round effects
 				
 				//draw cards
 				for (Team team: ps.getTeams()) {
@@ -51,7 +55,7 @@ public class PhaseManager {
 		
 		roundNum++;
 		
-		ps.addAction(new Action("Round: " + roundNum, 0.5f) {
+		ps.addAction(new Action("Round: " + roundNum, actionDurationTemp, true) {
 			
 			@Override
 			public void preAction() {
@@ -69,12 +73,12 @@ public class PhaseManager {
 				for (UnitCard unit: toq) {
 					ps.getToqActor().addUnit(unit);
 				}
+				
+				
 			}
 		});
 		
-		//activate pre-round effects
-		
-		ps.addAction(new Action("Start!", 0.5f) {
+		ps.addAction(new Action("", actionDurationTemp, false) {
 			
 			@Override
 			public void preAction() {
@@ -83,10 +87,11 @@ public class PhaseManager {
 				for (Team team: ps.getTeams()) {
 					team.preRoundDraw();
 				}
+				
+				//TODO: activate pre-round effects
+				preTurn();
 			}
 		});
-		
-		preTurn();
 	}
 	
 	public void preTurn() {
@@ -95,25 +100,38 @@ public class PhaseManager {
 		if (toq.isEmpty()) {
 			postRound();
 		} else {
-			currentUnit = toq.remove(0);
-			ps.getToqActor().removeUnit(currentUnit);
-			ps.getActionActor().switchUnit(currentUnit);
+			ps.addAction(new Action(toq.get(0).getName() + "'s turn", actionDurationTemp, true) {
+				@Override
+				public void preAction() {
+					currentUnit = toq.remove(0);
+					ps.getToqActor().removeUnit(currentUnit);
+					ps.getActionActor().switchUnit(currentUnit);
+				}
+			});
 		}
 	}
 	
 	public void postTurn() {
 		//post turn effects.
 		
-		if (toq.isEmpty()) {
-			postRound();
-		}
+		ps.addAction(new Action("", actionDurationTemp, false) {
+			@Override
+			public void preAction() {
+				
+				if (toq.isEmpty()) {
+					postRound();
+				} else {
+					preTurn();
+				}
+			}
+		});
 	}
 	
 	public void postRound() {
 		
 		//activate post-round effects
 		
-//		preRound();
+		preRound();
 	}
 	
 	public void addToTOQ(UnitCard unit) {
@@ -134,8 +152,8 @@ public class PhaseManager {
 			for(j = 0; j < toq.size() - 1; j++){
 				if(toq.get(j) != null && toq.get(j+1) != null){
 					
-					//TODO: account for speed ties and do stat buff stuff
-					if(toq.get(j).getBuffedStat(Stats.SPD) < toq.get(j + 1).getBuffedStat(Stats.SPD)){
+					if((toq.get(j).getBuffedStat(Stats.SPD) < toq.get(j + 1).getBuffedStat(Stats.SPD)) ||
+							(toq.get(j).getBuffedStat(Stats.SPD) == toq.get(j + 1).getBuffedStat(Stats.SPD) && GameStateManager.generator.nextBoolean())){
 						temp = toq.get(j);
 						toq.set(j,toq.get(j+1));
 						toq.set(j+1,temp);

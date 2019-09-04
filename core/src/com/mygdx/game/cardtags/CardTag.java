@@ -175,4 +175,12 @@ public class CardTag {
 	public void targetAcquisition(UnitCard unit) {}
 	
 	public void actionAcquisition(UnitCard unit) {}
+
+	public Card getCard() {
+		return card;
+	}
+
+	public void setCard(Card card) {
+		this.card = card;
+	}
 }

@@ -3,22 +3,24 @@ package com.mygdx.game.actors;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.states.PlayState;
-import com.mygdx.game.states.TitleState;
 
 public class UnitActionActor {
 
-	private final static int portraitX = 50;
+	private final static int portraitX = 0;
 	private final static int portraitY = 600;
 	private final static float scale = 0.5f;
+	private final static int padY = 25;
+
 	
 	private UnitCard unit;
 	private Table table;
 	private Text title, move, skill, endTurn;
 	
 	
-	public UnitActionActor(PlayState ps) {
+	public UnitActionActor(final PlayState ps) {
 		
 		table = new Table();
 		
@@ -44,7 +46,7 @@ public class UnitActionActor {
 			
 			@Override
 	        public void clicked(InputEvent e, float x, float y) {
-				//skill
+				//TODO: skill usage
 	        }
 	    });
 
@@ -56,13 +58,14 @@ public class UnitActionActor {
 			@Override
 	        public void clicked(InputEvent e, float x, float y) {
 				//end turn
+				ps.getPm().postTurn();
 	        }
 	    });
 
 		table.add(title).row();
-		table.add(move).row();
-		table.add(skill).row();
-		table.add(endTurn);
+		table.add(move).align(Align.right).padTop(padY).row();
+		table.add(skill).align(Align.right).row();
+		table.add(endTurn).align(Align.right);
 		
 		table.setPosition(portraitX, portraitY);
 		ps.getStage().addActor(table);
@@ -72,15 +75,15 @@ public class UnitActionActor {
 		this.unit = unit;
 		title.setText(unit.getName());
 		
-		if (unit.getTeam().isPlayer()) {
-			move.setVisible(true);
-			skill.setVisible(true);
-			endTurn.setVisible(true);
-		} else {
-			move.setVisible(false);
-			skill.setVisible(false);
-			endTurn.setVisible(false);
-		}
+//		if (unit.getTeam().isPlayer()) {
+//			move.setVisible(true);
+//			skill.setVisible(true);
+//			endTurn.setVisible(true);
+//		} else {
+//			move.setVisible(false);
+//			skill.setVisible(false);
+//			endTurn.setVisible(false);
+//		}
 	}
 
 	

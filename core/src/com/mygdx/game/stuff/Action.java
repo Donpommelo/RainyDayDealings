@@ -4,10 +4,12 @@ public abstract class Action {
 
 	private String text;
 	private float duration;
+	private boolean visible;
 	
-	public Action(String text, float duration) {
+	public Action(String text, float duration, boolean visible) {
 		this.text = text;
 		this.duration = duration;
+		this.visible = visible;
 	}
 	
 	public String getText() {
@@ -17,7 +19,9 @@ public abstract class Action {
 	public float getDuration() {
 		return duration;
 	}
-
+	
+	public boolean isVisible() { return visible; }
+	
 	public void preAction() {};
 	
 	public void postAction() {};

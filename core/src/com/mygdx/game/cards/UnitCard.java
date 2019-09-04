@@ -86,6 +86,4 @@ public class UnitCard extends Card {
 	public Square getOccupied() {
 		return occupied;
 	}
-
-	
 }

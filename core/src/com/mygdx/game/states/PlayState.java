@@ -173,7 +173,9 @@ public class PlayState extends GameState {
 			currentAction.preAction();
 			actionTimer = currentAction.getDuration();
 			
-			log.addAction(currentAction.getText());
+			if (currentAction.isVisible()) {
+				log.addAction(currentAction.getText());
+			}
 		}
 		
 		boardStage.act();
