@@ -32,7 +32,7 @@ public class PhaseManager {
 		
 		roundNum = 0;
 		
-		ps.addAction(new Action("FUG fugfugfugfugfug", 0.5f) {
+		ps.addAction(new Action("Level start", 0.5f) {
 			
 			@Override
 			public void preAction() {
@@ -51,7 +51,7 @@ public class PhaseManager {
 		
 		roundNum++;
 		
-		ps.addAction(new Action("FUG", 0.5f) {
+		ps.addAction(new Action("Round: " + roundNum, 0.5f) {
 			
 			@Override
 			public void preAction() {
@@ -78,7 +78,7 @@ public class PhaseManager {
 		
 		//activate pre-round effects
 		
-		ps.addAction(new Action("FUG fugfugfugfugfug", 0.5f) {
+		ps.addAction(new Action("Start!", 0.5f) {
 			
 			@Override
 			public void preAction() {
@@ -90,8 +90,6 @@ public class PhaseManager {
 			}
 		});
 		
-		
-		
 		preTurn();
 	}
 	
@@ -102,26 +100,11 @@ public class PhaseManager {
 			postRound();
 		} else {
 			//pop off fastest fella
-			currentUnit = toq.get(0);
+			currentUnit = toq.remove(0);
 			
-			toq.remove(0);
 			ps.getToqActor().removeUnit(currentUnit);
-			
-			
+			ps.getActionActor().switchUnit(currentUnit);
 		}
-	}
-	
-	public void makeTurn(UnitCard unit) {
-		//check fella's team. if cpu, do cpu stuff.
-		//otherwise, player can do stuff
-		
-		if (unit.getTeam().isPlayer()) {
-			
-		} else {
-			//enemy ai but for now passing turn always.
-			postTurn();
-		}
-		
 	}
 	
 	public void postTurn() {
@@ -132,7 +115,7 @@ public class PhaseManager {
 		
 		//activate post-round effects
 		
-		
+		preRound();
 	}
 	
 	public void addToTOQ(UnitCard unit) {
@@ -140,7 +123,7 @@ public class PhaseManager {
 	}
 	
 	public void removeFromTOQ(UnitCard unit) {
-		
+		toq.remove(unit);
 	}
 	
 	public void sortTOQ() {

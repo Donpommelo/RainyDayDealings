@@ -21,7 +21,7 @@ public class ActionLog {
 	private boolean visible;
 	
 	public ActionLog(PlayState ps) {
-		this.visible = false;
+		this.visible = true;
 		this.tableInner = new Table();
 		this.tableOuter = new Table();
 		
@@ -33,7 +33,7 @@ public class ActionLog {
 		options.setFadeScrollBars(false);
 		tableOuter.add(options).width(logWidthOuter).height(logHeight);
 		
-		tableOuter.setPosition(0, logEntryHeight - logHeight);
+		tableOuter.setPosition(0, 0);
 		tableOuter.setSize(logWidthOuter, logHeight);
 		
 		toggle = new Text("SHOW", logWidthOuter, 0);

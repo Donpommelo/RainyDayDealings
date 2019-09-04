@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public enum AssetList {
 
-	TITLE_CARD("HADAL_PANIC_3.jpg", Texture.class),
-	GAME_OVER_CARD("GAME_OVER_CARD.png", Texture.class),
+	TITLE_CARD("placeholder/HADAL_PANIC_3.jpg", Texture.class),
+	GAME_OVER_CARD("placeholder/GAME_OVER_CARD.png", Texture.class),
 	
 	BUTLER_FONT("fonts/butler.fnt", null),
 	LEARNING_FONT("fonts/learning_curve.fnt", null),
@@ -17,8 +17,10 @@ public enum AssetList {
 	UISKINIMG("ui/uiskin.png", Texture.class),
 	UISKINATL("ui/uiskin.atlas", TextureAtlas.class),
 	
-	BACKGROUND1("under_da_sea.jpg", Texture.class),
-    BLACK("black.png", Texture.class);
+	BACKGROUND1("placeholder/under_da_sea.jpg", Texture.class),
+    BLACK("placeholder/black.png", Texture.class),
+	
+	TEMPFACE("placeholder/tel.png", Texture.class);
 	;
 	
 	//Enum constructor and methods.

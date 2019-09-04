@@ -64,6 +64,8 @@ public class CardActor extends ARDDActor {
 				
 				if (newY > cardHeight) {
 					//Attempt to play the card
+		//			me.card.onPlay(unit);
+					
 					if (!inHand) {
 						inHand = true;
 						playstate.getHandActor().addCardToHand(lastIndex, me);

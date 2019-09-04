@@ -16,6 +16,7 @@ import com.mygdx.game.RainyDayGame;
 import com.mygdx.game.actors.ActionLog;
 import com.mygdx.game.actors.HandActor;
 import com.mygdx.game.actors.TOQActor;
+import com.mygdx.game.actors.UnitActionActor;
 import com.mygdx.game.board.Square;
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.inputs.PlayerController;
@@ -63,6 +64,7 @@ public class PlayState extends GameState {
 	private ArrayList<Team> teams;
 	private HandActor handActor;
 	private TOQActor toqActor;
+	private UnitActionActor actionActor;
 	
 	private ActionLog log;
 	private ArrayList<Action> actionQueue;
@@ -128,6 +130,7 @@ public class PlayState extends GameState {
 		log = new ActionLog(this);
 		handActor = new HandActor(this);
 		toqActor = new TOQActor(this);
+		actionActor = new UnitActionActor(this);
 		
 		app.newMenu(stage);
 		
@@ -304,6 +307,10 @@ public class PlayState extends GameState {
 
 	public TOQActor getToqActor() {
 		return toqActor;
+	}
+	
+	public UnitActionActor getActionActor() {
+		return actionActor;
 	}
 
 	public EffectManager getEm() {
