@@ -11,13 +11,15 @@ public class Square {
 	
 //	private PlayState ps;
 	private ArrayList<Square> neighbors;
-	private UnitCard occupant;
+	private ArrayList<UnitCard> occupants;
 	
 	private SquareActor actor;
 	
 	public Square(PlayState ps, int x, int y, int width, int height) {
 //		this.ps = ps;
-		actor = new SquareActor(x, y, width, height);
+		neighbors = new ArrayList<Square>();
+		occupants = new ArrayList<UnitCard>();
+		actor = new SquareActor(ps, this, x, y, width, height);
 		ps.getBoardStage().addActor(actor);
 	}
 	
@@ -25,14 +27,10 @@ public class Square {
 		neighbors.add(neighbor);
 	}
 
-	public UnitCard getOccupant() {
-		return occupant;
+	public ArrayList<UnitCard> getOccupants() {
+		return occupants;
 	}
-
-	public void setOccupant(UnitCard occupant) {
-		this.occupant = occupant;
-	}
-
+	
 	public SquareActor getActor() {
 		return actor;
 	}

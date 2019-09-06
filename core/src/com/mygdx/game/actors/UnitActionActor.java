@@ -4,8 +4,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.mygdx.game.board.Square;
 import com.mygdx.game.cards.UnitCard;
+import com.mygdx.game.numbers.Number;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.stuff.Action;
+import com.mygdx.game.stuff.SelectionStage;
 
 public class UnitActionActor {
 
@@ -14,13 +18,14 @@ public class UnitActionActor {
 	private final static float scale = 0.5f;
 	private final static int padY = 25;
 
-	
+
+	private PlayState ps;
 	private UnitCard unit;
 	private Table table;
 	private Text title, move, skill, endTurn;
 	
-	
 	public UnitActionActor(final PlayState ps) {
+		this.ps = ps;
 		
 		table = new Table();
 		
@@ -31,11 +36,19 @@ public class UnitActionActor {
 		move = new Text("MOVE", 0, 0);
 		move.setScale(scale);
 		
+		final UnitActionActor me = this;
+		
 		move.addListener(new ClickListener() {
 			
 			@Override
 	        public void clicked(InputEvent e, float x, float y) {
-				//move
+				
+				if (me.getUnit() == null) {
+					return;
+				}
+				
+				Number number = ps.getNm().rollNumber();
+				moveSequence(number.getNum());
 	        }
 	    });
 		
@@ -58,7 +71,9 @@ public class UnitActionActor {
 			@Override
 	        public void clicked(InputEvent e, float x, float y) {
 				//end turn
-				ps.getPm().postTurn();
+				if (ps.getActionQueue().isEmpty()) {
+					ps.getPm().postTurn();
+				}
 	        }
 	    });
 
@@ -86,7 +101,58 @@ public class UnitActionActor {
 //		}
 	}
 
+	public void moveSequence(final int numSquares) {
+		
+		final UnitActionActor me = this;
+		
+		SelectionStage newStage = new SelectionStage(ps) {
+			
+			@Override
+			public void onSelectSquare(SquareActor square) {
+				if (validSquares.contains(square)) {
+					moveSquare(numSquares, square.getSquare());
+					super.onSelectSquare(square);
+				}
+			}
+		};
+		
+		for (Square square : me.getUnit().getOccupied().getNeighbors()) {
+			newStage.addValidSquare(square.getActor());
+		}
+		
+		ps.setCurrentSelection(newStage);
+	}
 	
+	public void moveSquare(final int numSquares, final Square next) {
+		final UnitActionActor me = this;
+		
+		ps.addAction(new Action("", 0.25f, false) {
+			
+			@Override
+			public void preAction() {
+				Square last = me.getUnit().getOccupied();
+				me.getUnit().moveSquare(next);
+
+				if (numSquares <= 1) {
+					return;
+				}
+				
+				if (next.getNeighbors().size() == 0) {
+					return;
+				} else if (next.getNeighbors().size() == 1) {
+					moveSquare(numSquares - 1, next.getNeighbors().get(0));
+				} else if (next.getNeighbors().size() == 2) {
+					for (Square neighbor: next.getNeighbors()) {
+						if (neighbor != last) {
+							moveSquare(numSquares - 1, neighbor);
+						}
+					}
+				} else {
+					moveSequence(numSquares - 1);
+				}
+			}
+		});
+	}
 	
 	public UnitCard getUnit() {
 		return unit;

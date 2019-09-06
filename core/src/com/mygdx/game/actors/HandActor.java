@@ -13,7 +13,7 @@ public class HandActor {
 	
 	private ArrayList<Card> cards;
 	
-	private final static int handCenter = 500;
+	private final static int handCenter = 550;
 	private final static int handY = 0;
 
 	public HandActor(PlayState ps) {

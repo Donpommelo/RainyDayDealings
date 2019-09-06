@@ -22,7 +22,7 @@ public class PhaseManager {
 	
 	private int roundNum;
 	
-	private final static float actionDurationTemp = 2.0f;
+	private final static float actionDurationTemp = 1.0f;
 	
 	public PhaseManager(PlayState ps) {
 		this.ps = ps;

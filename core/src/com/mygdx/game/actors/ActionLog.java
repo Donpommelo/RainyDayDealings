@@ -10,8 +10,8 @@ import com.mygdx.game.states.PlayState;
 
 public class ActionLog {
 
-	private final static int logWidthOuter = 160;
-	private final static int logWidthInner = 150;
+	private final static int logWidthOuter = 210;
+	private final static int logWidthInner = 200;
 	private final static int logHeight = 100;
 	private final static int logEntryHeight = 15;
 	
@@ -64,5 +64,6 @@ public class ActionLog {
 		text.setScale(0.25f);
 		tableInner.add(text).width(logWidthInner).height(logEntryHeight);
 		tableInner.row();
+		options.scrollTo(0, 0, 0, 0);
 	}
 }

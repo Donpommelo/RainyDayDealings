@@ -23,10 +23,12 @@ import com.mygdx.game.inputs.PlayerController;
 import com.mygdx.game.managers.AssetList;
 import com.mygdx.game.managers.EffectManager;
 import com.mygdx.game.managers.GameStateManager;
+import com.mygdx.game.managers.NumberManager;
 import com.mygdx.game.managers.PhaseManager;
 import com.mygdx.game.managers.TiledObjectManager;
 import com.mygdx.game.stuff.Action;
 import com.mygdx.game.stuff.Deck;
+import com.mygdx.game.stuff.SelectionStage;
 import com.mygdx.game.stuff.Team;
 import com.mygdx.game.utils.CameraStyles;
 
@@ -73,6 +75,9 @@ public class PlayState extends GameState {
 	
 	private EffectManager em;
 	private PhaseManager pm;
+	private NumberManager nm;
+	
+	private SelectionStage currentSelection;
 	
 	private boolean dragToScroll;
 	
@@ -114,6 +119,7 @@ public class PlayState extends GameState {
 		
 		em = new EffectManager(this);
 		pm = new PhaseManager(this);
+		nm = new NumberManager(this);
 		
 		setStartingLocations();
 		pm.startofLevel();
@@ -299,9 +305,7 @@ public class PlayState extends GameState {
 		ArrayList<UnitCard> activeUnits = new ArrayList<UnitCard>();
 		
 		for (Square square: TiledObjectManager.squares) {
-			if (square.getOccupant() != null) {
-				activeUnits.add(square.getOccupant());
-			}
+			activeUnits.addAll(square.getOccupants());
 		}
 		
 		return activeUnits;
@@ -333,6 +337,10 @@ public class PlayState extends GameState {
 	
 	public UnitActionActor getActionActor() {
 		return actionActor;
+	}	
+
+	public ArrayList<Action> getActionQueue() {
+		return actionQueue;
 	}
 
 	public EffectManager getEm() {
@@ -341,6 +349,18 @@ public class PlayState extends GameState {
 
 	public PhaseManager getPm() {
 		return pm;
+	}
+	
+	public NumberManager getNm() {
+		return nm;
+	}
+	
+	public SelectionStage getCurrentSelection() {
+		return currentSelection;
+	}
+
+	public void setCurrentSelection(SelectionStage currentSelection) {
+		this.currentSelection = currentSelection;
 	}
 
 	public boolean isDragToScroll() {

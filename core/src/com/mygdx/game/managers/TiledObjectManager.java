@@ -39,20 +39,22 @@ public class TiledObjectManager {
 					neighboring.put(newSquare, object.getProperties().get("neighbors", String.class));
 				}
 				if (object.getProperties().get("squareId", String.class) != null) {
-					neighbored.put(object.getProperties().get("squareID", String.class), newSquare);
+					neighbored.put(object.getProperties().get("squareId", String.class), newSquare);
 				}
 				if (object.getProperties().get("startId", String.class) != null) {
 					starting.put(object.getProperties().get("startId", String.class), newSquare);
 				}
 			}
 		}
+		
+		parseNeighbors();
 	}
 	
 	public static void parseNeighbors() {
 		for (Square key : neighboring.keySet()) {
     		for (String id : neighboring.get(key).split(",")) {
     			if (!id.equals("")) {
-    				key.addNeighbor(neighbored.getOrDefault(id, null));
+    				key.addNeighbor(neighbored.get(id));
     			}
     		}
     	}

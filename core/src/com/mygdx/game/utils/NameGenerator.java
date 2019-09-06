@@ -534,6 +534,12 @@ public enum NameGenerator {
 		this.canFollow = canFollow;
 	}
 	
+	public static String generateFirst() {
+		String firstName = generateName("start");
+		firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
+		return firstName;
+	}
+	
 	/**
 	 * This generates a first and last name.
 	 * @param alliteration: Should the 2 names have the same first letter?

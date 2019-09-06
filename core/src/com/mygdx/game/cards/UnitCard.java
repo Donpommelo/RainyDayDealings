@@ -35,7 +35,7 @@ public class UnitCard extends Card {
 	}
 	
 	public UnitCard(PlayState ps,Team team) {
-		this(ps, team, NameGenerator.generateFirstLast(true), 0, 5, 5, 5, 5);
+		this(ps, team, NameGenerator.generateFirst(), 0, 5, 5, 5, 5);
 	}
 	
 	public int getBuffedStat(Stats stat) {
@@ -61,17 +61,14 @@ public class UnitCard extends Card {
 	}
 	
 	public void moveSquare(Square newSquare) {
-		if (newSquare.getOccupant() == null) {
-			
-			if (occupied != null) {
-				occupied.setOccupant(null);
-			}
-			
-			occupied = newSquare;
-			newSquare.setOccupant(this);
-			
-			actor.syncUnitPosition();
+		if (occupied != null) {
+			occupied.getOccupants().remove(this);
 		}
+		
+		occupied = newSquare;
+		newSquare.getOccupants().add(this);
+		
+		actor.syncUnitPosition();
 	}
 
 	public UnitActor getUnitActor() {

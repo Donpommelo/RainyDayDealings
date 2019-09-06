@@ -73,8 +73,8 @@
   </object>
   <object id="25" x="256" y="448" width="64" height="64">
    <properties>
-    <property name="neighbors" value="10,12"/>
-    <property name="squareId" value="11"/>
+    <property name="neighbors" value="11,13"/>
+    <property name="squareId" value="12"/>
    </properties>
   </object>
   <object id="26" x="352" y="448" width="64" height="64">
