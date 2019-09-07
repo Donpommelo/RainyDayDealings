@@ -34,26 +34,26 @@ public class HandActor {
 
 		ps.getStage().addActor(cardActor);
 		
-		addCardToHand(cards.size(), cardActor);
+		addCardToHand(cards.size(), card);
 	}
 	
 	public void deleteCard(Card card) {
 		
 		if (card.getCardActor() != null) {
 			card.getCardActor().remove();
-			removeCardFromHand(card.getCardActor());
+			removeCardFromHand(card);
 		}
 	}
 	
-	public void addCardToHand(int index, CardActor card) {
-		cards.add(index, card.getCard());
+	public void addCardToHand(int index, Card card) {
+		cards.add(index, card);
 		syncCardPositions();
 	}
 	
-	public int removeCardFromHand(CardActor card) {
-		
-		int index = cards.indexOf(card.getCard());
-		cards.remove(card.getCard());
+	public int removeCardFromHand(Card card) {
+
+		int index = cards.indexOf(card);
+		cards.remove(card);
 		syncCardPositions();
 		
 		return index;

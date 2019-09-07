@@ -17,7 +17,7 @@ public class CardActor extends ARDDActor {
 	public static final int cardWidth = 75;
 	public static final int cardHeight = 105;
 	
-	public CardActor(PlayState ps, Card card) {
+	public CardActor(PlayState ps, final Card card) {
 		super(0, 0, cardWidth, cardHeight);
 		this.ps = ps;
 		this.card = card;
@@ -42,12 +42,12 @@ public class CardActor extends ARDDActor {
 				if (newY > cardHeight) {
 					if (inHand) {
 						inHand = false;
-						lastIndex = playstate.getHandActor().removeCardFromHand(me);
+						lastIndex = playstate.getHandActor().removeCardFromHand(me.getCard());
 					}
 				} else {
 					if (!inHand) {
 						inHand = true;
-						playstate.getHandActor().addCardToHand(lastIndex, me);
+						playstate.getHandActor().addCardToHand(lastIndex, me.getCard());
 					}
 				}
 			}
@@ -62,13 +62,9 @@ public class CardActor extends ARDDActor {
 				playstate.setDragToScroll(true);
 				
 				if (newY > cardHeight) {
-					//Attempt to play the card
-		//			me.card.onPlay(unit);
 					
-					if (!inHand) {
-						inHand = true;
-						playstate.getHandActor().addCardToHand(lastIndex, me);
-					}
+					//Attempt to play the card
+					playstate.getAm().playCard(playstate.getPm().getCurrentUnit(), card);
 				} else {
 					playstate.getHandActor().syncCardPositions();
 				}

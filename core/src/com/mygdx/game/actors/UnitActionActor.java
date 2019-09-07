@@ -54,7 +54,7 @@ public class UnitActionActor {
 					}
 					
 					Number number = ps.getNm().rollNumber();
-					moveSequence(number.getNum());
+					ps.getAm().moveSequence(number.getNum(), me.getUnit());
 				}
 	        }
 	    });
@@ -113,59 +113,6 @@ public class UnitActionActor {
 //		}
 	}
 
-	public void moveSequence(final int numSquares) {
-		
-		final UnitActionActor me = this;
-		
-		SelectionStage newStage = new SelectionStage(ps) {
-			
-			@Override
-			public void onSelectSquare(SquareActor square) {
-				if (validSquares.contains(square)) {
-					moveSquare(numSquares, square.getSquare());
-					super.onSelectSquare(square);
-				}
-			}
-		};
-		
-		for (Square square : me.getUnit().getOccupied().getNeighbors()) {
-			newStage.addValidSquare(square.getActor());
-		}
-		
-		ps.setCurrentSelection(newStage);
-	}
-	
-	public void moveSquare(final int numSquares, final Square next) {
-		final UnitActionActor me = this;
-		
-		ps.addAction(new Action("", 0.25f, false) {
-			
-			@Override
-			public void preAction() {
-				Square last = me.getUnit().getOccupied();
-				me.getUnit().moveSquare(next);
-
-				if (numSquares <= 1) {
-					return;
-				}
-				
-				if (next.getNeighbors().size() == 0) {
-					return;
-				} else if (next.getNeighbors().size() == 1) {
-					moveSquare(numSquares - 1, next.getNeighbors().get(0));
-				} else if (next.getNeighbors().size() == 2) {
-					for (Square neighbor: next.getNeighbors()) {
-						if (neighbor != last) {
-							moveSquare(numSquares - 1, neighbor);
-						}
-					}
-				} else {
-					moveSequence(numSquares - 1);
-				}
-			}
-		});
-	}
-	
 	public UnitCard getUnit() {
 		return unit;
 	}

@@ -44,6 +44,13 @@ public class Card {
 		return name;
 	}
 
+	public int getRainCost() {
+		return rainCost;
+	}
+
+	public void setRainCost(int rainCost) {
+		this.rainCost = rainCost;
+	}
 
 	public CardActor getCardActor() {
 		return cardActor;

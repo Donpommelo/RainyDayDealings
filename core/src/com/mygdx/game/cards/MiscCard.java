@@ -7,12 +7,12 @@ import com.mygdx.game.stuff.Team;
 
 public class MiscCard extends Card{	
 	
-	public MiscCard(PlayState ps, Team team, String name, int rainCost, CardTag... tags) {
+	public MiscCard(PlayState ps, String name, int rainCost, CardTag... tags) {
 		super(ps, name, rainCost, tags);
 	}
 	
 	@Override
 	public void onPlay(UnitCard unit) {
-		unit.getTeam().discardCard(unit, this);
+		ps.getDm().discardFromHand(unit.getTeam(), unit, this);
 	}
 }

@@ -20,12 +20,15 @@ import com.mygdx.game.actors.UnitActionActor;
 import com.mygdx.game.board.Square;
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.inputs.PlayerController;
+import com.mygdx.game.managers.ActionManager;
 import com.mygdx.game.managers.AssetList;
+import com.mygdx.game.managers.DeckManager;
 import com.mygdx.game.managers.EffectManager;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.NumberManager;
 import com.mygdx.game.managers.PhaseManager;
 import com.mygdx.game.managers.TiledObjectManager;
+import com.mygdx.game.managers.UnitManager;
 import com.mygdx.game.stuff.Action;
 import com.mygdx.game.stuff.Deck;
 import com.mygdx.game.stuff.SelectionStage;
@@ -73,9 +76,12 @@ public class PlayState extends GameState {
 	private Action currentAction;
 	private float actionTimer;
 	
+	private ActionManager am;
 	private EffectManager em;
+	private DeckManager dm;
 	private PhaseManager pm;
 	private NumberManager nm;
+	private UnitManager um;
 	
 	private SelectionStage currentSelection;
 	
@@ -110,16 +116,18 @@ public class PlayState extends GameState {
 		cameraMaxY = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
 		
 		this.teams = new ArrayList<Team>();
-		Deck tempDeck = new Deck(this);
-		teams.add(new Team(this, tempDeck, false));
-		teams.add(new Team(this, tempDeck, true));
+		teams.add(new Team(this, new Deck(this), false));
+		teams.add(new Team(this, new Deck(this), true));
 		
 		actionQueue = new ArrayList<Action>();
 		actionTimer = 0.0f;
 		
+		am = new ActionManager(this);
 		em = new EffectManager(this);
+		dm = new DeckManager(this);
 		pm = new PhaseManager(this);
 		nm = new NumberManager(this);
+		um = new UnitManager(this);
 		
 		setStartingLocations();
 		pm.startofLevel();
@@ -343,8 +351,16 @@ public class PlayState extends GameState {
 		return actionQueue;
 	}
 
+	public ActionManager getAm() {
+		return am;
+	}
+
 	public EffectManager getEm() {
 		return em;
+	}
+
+	public DeckManager getDm() {
+		return dm;
 	}
 
 	public PhaseManager getPm() {
@@ -355,6 +371,14 @@ public class PlayState extends GameState {
 		return nm;
 	}
 	
+	public UnitManager getUm() {
+		return um;
+	}
+
+	public void setUm(UnitManager um) {
+		this.um = um;
+	}
+
 	public SelectionStage getCurrentSelection() {
 		return currentSelection;
 	}

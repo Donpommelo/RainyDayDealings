@@ -8,6 +8,7 @@ import com.mygdx.game.cardtags.CardTag;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.stuff.Card;
 import com.mygdx.game.utils.CardTagProcTime;
+import com.mygdx.game.utils.EffectTag;
 
 public class EffectManager {
 
@@ -21,7 +22,7 @@ public class EffectManager {
 		this.tagsChecked = new ArrayList<CardTag>();
 	}
 
-	public int cardTagProcTime(CardTagProcTime procTime, int amount, UnitCard fella1, UnitCard fella2, Card card, CardTag tag, Square square) {
+	public int cardTagProcTime(CardTagProcTime procTime, int amount, UnitCard fella1, UnitCard fella2, Card card, CardTag tag, Square square, EffectTag... extra) {
 		
 		int finalAmount = amount;
 		

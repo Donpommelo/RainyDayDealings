@@ -3,7 +3,7 @@ package com.mygdx.game.managers;
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.utils.CardTagProcTime;
-import com.mygdx.game.utils.DamageTag;
+import com.mygdx.game.utils.EffectTag;
 import com.mygdx.game.utils.Stats;
 
 public class UnitManager {
@@ -14,7 +14,7 @@ public class UnitManager {
 		this.ps = ps;
 	}
 	
-	public void hpChange(UnitCard perp, UnitCard vic, int amount, DamageTag... tags) {
+	public void hpChange(UnitCard perp, UnitCard vic, int amount, EffectTag... tags) {
 		
 		int finalAmount = amount;
 		

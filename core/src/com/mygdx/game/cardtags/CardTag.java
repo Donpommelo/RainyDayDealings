@@ -5,6 +5,7 @@ import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.stuff.Card;
 import com.mygdx.game.utils.CardTagProcTime;
+import com.mygdx.game.utils.EffectTag;
 
 public class CardTag {
 
@@ -24,7 +25,7 @@ public class CardTag {
 		ps.getEm().deleteTag(this);
 	}
 	
-	public int cardTagProcTime(CardTagProcTime procTime, int amount, UnitCard fella1, UnitCard fella2, Card card, CardTag tag, Square square) {
+	public int cardTagProcTime(CardTagProcTime procTime, int amount, UnitCard fella1, UnitCard fella2, Card card, CardTag tag, Square square, EffectTag... extra) {
 		
 		int finalAmount = amount;
 		
@@ -76,15 +77,12 @@ public class CardTag {
 			break;	
 		case WAIT:
 			onWait(fella1);
-			break;	
-		case CARD_DRAW:
-			onDraw(fella1, card);
 			break;
-		case CARD_DISCARD:
-			onDiscard(fella1, card);
+		case CARD_TO_HAND:
+			onAddtoHand(fella1, card, extra);
 			break;
-		case CARD_REMOVE_FROM_PLAY:
-			onRemoveFromPlay(fella1, card);
+		case CARD_TO_DECK:
+			onAddtoDeck(fella1, card, extra);
 			break;
 		case CARD_ATTACH:
 			onAttach(fella1, card);
@@ -152,9 +150,9 @@ public class CardTag {
 
 	public void onWait(UnitCard unit) {}
 	
-	public void onDraw(UnitCard unit, Card card) {}
+	public void onAddtoHand(UnitCard unit, Card card, EffectTag... tag) {}
 	
-	public void onDiscard(UnitCard unit, Card card) {}
+	public void onAddtoDeck(UnitCard unit, Card card, EffectTag... tag) {}
 	
 	public void onRemoveFromPlay(UnitCard unit, Card card) {}
 	

@@ -119,6 +119,7 @@ public class PhaseManager {
 		//post turn effects.
 		
 		ps.addAction(new Action("", actionDurationTemp, false) {
+			
 			@Override
 			public void preAction() {
 				
@@ -174,5 +175,9 @@ public class PhaseManager {
 
 	public int getRoundNum() {
 		return roundNum;
-	}	
+	}
+
+	public UnitCard getCurrentUnit() {
+		return currentUnit;
+	}
 }

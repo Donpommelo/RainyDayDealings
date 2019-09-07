@@ -49,52 +49,15 @@ public class Team {
 		this.teamDummy = new UnitCard(ps, this, "dummy", 0, 0, 0, 0, 0);
 	}
 	
-	public void drawTopCard(UnitCard drawer) {
-		Card topCard = deck.getTopCard();
-		
-		if (topCard != null) {
-			
-			//before draw effects
-			
-			deck.getCards().remove(topCard);
-			
-			if (hand.getCards().size() < handSize) {
-				hand.addCard(topCard);
-				//after draw effects
-			} else {
-				
-				//overdraw effects?
-			}
-		}
-	}
-	
-	public void drawCard(UnitCard drawer, Card card) {
-		deck.getCards().remove(card);
-		
-		if (hand.getCards().size() < handSize) {
-			
-			hand.addCard(card);
-			//after draw effects
-		} else {
-			
-			//overdraw effects?
-		}
-	}
-	
-	public void discardCard(UnitCard drawer, Card card) {
-		hand.removeCard(card);
-		trashDeck.addCard(card);
-	}
-	
 	public void firstRoundDraw() {
 		for (int i = 0; i < firstRoundDraw; i++) {
-			drawTopCard(teamDummy);
+			ps.getDm().drawTopCard(this, teamDummy, deck);
 		}
 	}
 	
 	public void preRoundDraw() {
 		for (int i = 0; i < preRoundDraw; i++) {
-			drawTopCard(teamDummy);
+			ps.getDm().drawTopCard(this, teamDummy, deck);
 		}
 	}
 
@@ -104,6 +67,10 @@ public class Team {
 
 	public ArrayList<UnitCard> getStartingUnits() {
 		return startingUnits;
+	}
+
+	public Hand getHand() {
+		return hand;
 	}
 
 	public Deck getDeck() {
@@ -116,5 +83,9 @@ public class Team {
 	
 	public Deck getEventDeck() {
 		return eventDeck;
+	}
+
+	public int getHandSize() {
+		return handSize;
 	}
 }
