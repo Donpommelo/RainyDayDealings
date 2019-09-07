@@ -7,6 +7,7 @@ import com.mygdx.game.states.PlayState;
 import com.mygdx.game.stuff.Card;
 import com.mygdx.game.stuff.Team;
 import com.mygdx.game.utils.Stats;
+import com.mygdx.game.utils.CardTagProcTime;
 import com.mygdx.game.utils.NameGenerator;
 
 public class UnitCard extends Card {	
@@ -38,6 +39,22 @@ public class UnitCard extends Card {
 		this(ps, team, NameGenerator.generateFirst(), 0, 5, 5, 5, 5);
 	}
 	
+	public void die() {
+		occupied.getOccupants().remove(this);
+		this.actor.remove();
+		
+		reset();
+		
+		team.getTrashDeck().addCard(this);
+	}
+	
+	public void reset() {
+		occupied = null;
+		currentHp = getBuffedStat(Stats.HP);
+		
+		//TODO: remove all attached cards
+	}
+	
 	public int getBuffedStat(Stats stat) {
 		
 		int baseStat = 0;
@@ -54,8 +71,12 @@ public class UnitCard extends Card {
 			break;
 		case SPD:
 			baseStat = Spd;
+			break;
+		default:
 			break;		
 		}
+		
+		baseStat = ps.getEm().cardTagProcTime(CardTagProcTime.STAT_REQ, baseStat, this, null, null, null, null);
 		
 		return baseStat;
 	}
@@ -82,5 +103,37 @@ public class UnitCard extends Card {
 
 	public Square getOccupied() {
 		return occupied;
+	}
+
+	public int getCurrentHp() {
+		return currentHp;
+	}
+
+	public void setCurrentHp(int currentHp) {
+		this.currentHp = currentHp;
+	}
+
+	public int getCurrentRain() {
+		return currentRain;
+	}
+
+	public void setCurrentRain(int currentRain) {
+		this.currentRain = currentRain;
+	}
+
+	public int getSatLevel() {
+		return satLevel;
+	}
+
+	public void setSatLevel(int satLevel) {
+		this.satLevel = satLevel;
+	}
+
+	public int getHighestSatLevel() {
+		return highestSatLevel;
+	}
+
+	public void setHighestSatLevel(int highestSatLevel) {
+		this.highestSatLevel = highestSatLevel;
 	}
 }

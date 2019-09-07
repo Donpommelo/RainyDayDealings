@@ -104,5 +104,17 @@ public class Team {
 
 	public ArrayList<UnitCard> getStartingUnits() {
 		return startingUnits;
-	}	
+	}
+
+	public Deck getDeck() {
+		return deck;
+	}
+
+	public Deck getTrashDeck() {
+		return trashDeck;
+	}
+	
+	public Deck getEventDeck() {
+		return eventDeck;
+	}
 }

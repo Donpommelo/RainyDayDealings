@@ -10,6 +10,7 @@ import com.mygdx.game.numbers.Number;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.stuff.Action;
 import com.mygdx.game.stuff.SelectionStage;
+import com.mygdx.game.utils.Stats;
 
 public class UnitActionActor {
 
@@ -23,6 +24,8 @@ public class UnitActionActor {
 	private UnitCard unit;
 	private Table table;
 	private Text title, move, skill, endTurn;
+	
+	private int movesUsed, skillsUsed, cardsUsed;
 	
 	public UnitActionActor(final PlayState ps) {
 		this.ps = ps;
@@ -43,12 +46,16 @@ public class UnitActionActor {
 			@Override
 	        public void clicked(InputEvent e, float x, float y) {
 				
-				if (me.getUnit() == null) {
-					return;
+				if (movesUsed < 1 + unit.getBuffedStat(Stats.MOVE_LIMIT)) {
+					movesUsed++;
+					
+					if (me.getUnit() == null) {
+						return;
+					}
+					
+					Number number = ps.getNm().rollNumber();
+					moveSequence(number.getNum());
 				}
-				
-				Number number = ps.getNm().rollNumber();
-				moveSequence(number.getNum());
 	        }
 	    });
 		
@@ -89,6 +96,11 @@ public class UnitActionActor {
 	public void switchUnit(UnitCard unit) {
 		this.unit = unit;
 		title.setText(unit.getName());
+		
+		movesUsed = 0;
+		skillsUsed = 0;
+		cardsUsed = 0;
+		
 		
 //		if (unit.getTeam().isPlayer()) {
 //			move.setVisible(true);

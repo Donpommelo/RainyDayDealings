@@ -30,6 +30,7 @@ public class ActionLog {
 		tableOuter.add(title).width(logWidthOuter).height(logEntryHeight);
 		tableOuter.row();
 		this.options = new ScrollPane(tableInner, ps.getGsm().getSkin());
+		
 		options.setFadeScrollBars(false);
 		tableOuter.add(options).width(logWidthOuter).height(logHeight);
 		
@@ -64,6 +65,8 @@ public class ActionLog {
 		text.setScale(0.25f);
 		tableInner.add(text).width(logWidthInner).height(logEntryHeight);
 		tableInner.row();
+		
+		options.layout();
 		options.scrollTo(0, 0, 0, 0);
 	}
 }

@@ -6,6 +6,7 @@ import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.stuff.Action;
 import com.mygdx.game.stuff.Team;
+import com.mygdx.game.utils.CardTagProcTime;
 import com.mygdx.game.utils.Stats;
 
 /**
@@ -39,7 +40,7 @@ public class PhaseManager {
 			@Override
 			public void preAction() {
 				
-				//TODO: Start of round effects
+				ps.getEm().cardTagProcTime(CardTagProcTime.LEVEL_START, 0, null, null, null, null, null);
 				
 				//draw cards
 				for (Team team: ps.getTeams()) {
@@ -88,7 +89,7 @@ public class PhaseManager {
 					team.preRoundDraw();
 				}
 				
-				//TODO: activate pre-round effects
+				ps.getEm().cardTagProcTime(CardTagProcTime.BEFORE_ROUND, 0, null, null, null, null, null);
 				preTurn();
 			}
 		});
@@ -101,11 +102,14 @@ public class PhaseManager {
 			postRound();
 		} else {
 			ps.addAction(new Action(toq.get(0).getName() + "'s turn", actionDurationTemp, true) {
+				
 				@Override
 				public void preAction() {
 					currentUnit = toq.remove(0);
 					ps.getToqActor().removeUnit(currentUnit);
 					ps.getActionActor().switchUnit(currentUnit);
+					
+					ps.getEm().cardTagProcTime(CardTagProcTime.BEFORE_TURN, 0, null, null, null, null, null);
 				}
 			});
 		}
@@ -118,6 +122,8 @@ public class PhaseManager {
 			@Override
 			public void preAction() {
 				
+				ps.getEm().cardTagProcTime(CardTagProcTime.AFTER_TURN, 0, null, null, null, null, null);
+				
 				if (toq.isEmpty()) {
 					postRound();
 				} else {
@@ -128,9 +134,7 @@ public class PhaseManager {
 	}
 	
 	public void postRound() {
-		
-		//activate post-round effects
-		
+		ps.getEm().cardTagProcTime(CardTagProcTime.AFTER_ROUND, 0, null, null, null, null, null);
 		preRound();
 	}
 	
