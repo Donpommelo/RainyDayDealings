@@ -65,4 +65,8 @@ public class UnitActor extends ARDDActor {
 			}
 		}
 	}
+
+	public UnitCard getUnit() {
+		return unit;
+	}
 }

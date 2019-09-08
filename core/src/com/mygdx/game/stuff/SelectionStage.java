@@ -31,11 +31,12 @@ public class SelectionStage {
 		ps.setCurrentSelection(null);
 	}
 	
-	public void onSelectUnit(UnitActor square) {
+	public void onSelectUnit(UnitActor unit) {
 		for (UnitActor actor : validUnits) {
 			actor.removeAction(validSelectionIndicator);
 		}
 		validUnits.clear();
+		ps.setCurrentSelection(null);
 	}
 	
 	public void addValidSquare(SquareActor square) {

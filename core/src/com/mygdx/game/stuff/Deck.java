@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import com.mygdx.game.cards.Longing;
+import com.mygdx.game.cards.Solace;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.utils.EffectTag;
 
@@ -25,6 +26,7 @@ public class Deck {
 		
 		for (int i = 0; i < 15; i++) {
 			cards.add(new Longing(ps));
+			cards.add(new Solace(ps));
 		}
 	}
 	

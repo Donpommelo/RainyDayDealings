@@ -28,13 +28,11 @@ public class Card {
 		}
 	}
 	
-	public void addTags() {
-		
-	}
+	public void addTags() {}
 	
-	public void onPlay(UnitCard unit) {
-		
-	}
+	public void onPlay(UnitCard unit) {}
+	
+	public void onTargetUnit(UnitCard player, UnitCard target) {}
 	
 	public String getName() {
 		return name;

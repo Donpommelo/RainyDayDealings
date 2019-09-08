@@ -15,7 +15,6 @@ public class Longing extends MiscCard {
 	@Override
 	public void onPlay(final UnitCard unit) {
 		super.onPlay(unit);
-//		ps.getDm().drawTopCard(unit.getTeam(), unit, unit.getTeam().getDeck());
 		ps.addAction(new Action("Drew " + 2 +" Cards!", 1.0f, true) {
 			
 			@Override

@@ -5,7 +5,7 @@ import com.mygdx.game.states.PlayState;
 import com.mygdx.game.stuff.Card;
 import com.mygdx.game.stuff.Team;
 
-public class MiscCard extends Card{	
+public class MiscCard extends Card {	
 	
 	public MiscCard(PlayState ps, String name, int rainCost, CardTag... tags) {
 		super(ps, name, rainCost, tags);

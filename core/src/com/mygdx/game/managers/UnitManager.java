@@ -1,7 +1,13 @@
 package com.mygdx.game.managers;
 
+import java.util.ArrayList;
+
+import com.mygdx.game.actors.UnitActor;
+import com.mygdx.game.board.Square;
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.stuff.Card;
+import com.mygdx.game.stuff.SelectionStage;
 import com.mygdx.game.utils.CardTagProcTime;
 import com.mygdx.game.utils.EffectTag;
 import com.mygdx.game.utils.Stats;
@@ -46,5 +52,97 @@ public class UnitManager {
 		//TODO: check for saturation point level
 	}
 	
+	public ArrayList<UnitCard> getAlliesWithinDistance(Square start, UnitCard unit, int range) {
+		ArrayList<UnitCard> targets = new ArrayList<UnitCard>();
+		
+		for (UnitCard target : getUnitsWithinDistance(start, range)) {
+			if (target.getTeam().equals(unit.getTeam())) {
+				targets.add(target);
+			}
+		}
+		
+		return targets;
+	}
 	
+	public ArrayList<UnitCard> getEnemiesWithinDistance(Square start, UnitCard unit, int range) {
+		ArrayList<UnitCard> targets = new ArrayList<UnitCard>();
+		
+		for (UnitCard target : getUnitsWithinDistance(start, range)) {
+			if (!target.getTeam().equals(unit.getTeam())) {
+				targets.add(target);
+			}
+		}
+		
+		return targets;
+	}
+	
+	public void targetUnitWithinRange(final Card card, final UnitCard player, int range) {
+		SelectionStage newStage = new SelectionStage(ps) {
+			
+			@Override
+			public void onSelectUnit(UnitActor target) {
+				if (validUnits.contains(target)) {
+					card.onTargetUnit(player, target.getUnit());
+					super.onSelectUnit(target);
+				}
+			}
+		};
+		
+		for (UnitCard target : ps.getUm().getUnitsWithinDistance(player.getOccupied(), range)) {
+			newStage.addValidUnit(target.getUnitActor());
+		}
+		
+		ps.setCurrentSelection(newStage);
+	}
+	
+	public ArrayList<UnitCard> getUnitsWithinDistance(Square start, int range) {
+		ArrayList<UnitCard> targets = new ArrayList<UnitCard>();
+		ArrayList<Square> squares = new ArrayList<Square>();
+		
+		squares.add(start);
+		
+		for (int i = 1; i <= range; i++) {
+			
+			ArrayList<Square> temp = new ArrayList<Square>();
+			
+			for (Square s : squares) {
+				for (Square n : s.getNeighbors()) {
+					if (!squares.contains(n) && !temp.contains(n)) {
+						temp.add(n);
+					}
+				}
+			}
+			
+			squares.addAll(temp);
+		}
+		
+		for (Square s: squares) {
+			targets.addAll(s.getOccupants());
+		}
+		
+		return targets;
+	}
+	
+	public ArrayList<Square> getSquaresWithinDistance(Square start, int range) {
+		ArrayList<Square> squares = new ArrayList<Square>();
+		
+		squares.add(start);
+		
+		for (int i = 1; i <= range; i++) {
+			
+			ArrayList<Square> temp = new ArrayList<Square>();
+			
+			for (Square s : squares) {
+				for (Square n : s.getNeighbors()) {
+					if (!squares.contains(n) && !temp.contains(n)) {
+						temp.add(n);
+					}
+				}
+			}
+			
+			squares.addAll(temp);
+		}
+		
+		return squares;
+	}
 }
