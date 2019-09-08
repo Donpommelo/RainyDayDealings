@@ -74,8 +74,6 @@ public class PhaseManager {
 				for (UnitCard unit: toq) {
 					ps.getToqActor().addUnit(unit);
 				}
-				
-				
 			}
 		});
 		

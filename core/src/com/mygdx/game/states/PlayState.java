@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.RainyDayGame;
 import com.mygdx.game.actors.ActionLog;
 import com.mygdx.game.actors.HandActor;
+import com.mygdx.game.actors.PortraitActor;
 import com.mygdx.game.actors.TOQActor;
 import com.mygdx.game.actors.UnitActionActor;
 import com.mygdx.game.board.Square;
@@ -84,6 +85,7 @@ public class PlayState extends GameState {
 	private UnitManager um;
 	
 	private SelectionStage currentSelection;
+	private PortraitActor portrait;
 	
 	private boolean dragToScroll;
 	
@@ -385,6 +387,14 @@ public class PlayState extends GameState {
 
 	public void setCurrentSelection(SelectionStage currentSelection) {
 		this.currentSelection = currentSelection;
+	}
+
+	public PortraitActor getPortrait() {
+		return portrait;
+	}
+
+	public void setPortrait(PortraitActor portrait) {
+		this.portrait = portrait;
 	}
 
 	public boolean isDragToScroll() {

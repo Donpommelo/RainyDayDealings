@@ -2,6 +2,7 @@ package com.mygdx.game.actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.mygdx.game.RainyDayGame;
@@ -17,6 +18,8 @@ public class CardActor extends ARDDActor {
 	public static final int cardWidth = 75;
 	public static final int cardHeight = 105;
 	
+	public Vector2 tmpVec = new Vector2(0, 0);
+	
 	public CardActor(PlayState ps, final Card card) {
 		super(0, 0, cardWidth, cardHeight);
 		this.ps = ps;
@@ -29,17 +32,16 @@ public class CardActor extends ARDDActor {
 			
 			private boolean inHand = true;
 			private int lastIndex;
-			private int newX, newY;
 			
 			@Override
 			public void drag(InputEvent event, float x, float y, int pointer) {
 				
-				newX = Gdx.input.getX() - cardWidth / 2;
-				newY = Gdx.graphics.getHeight() - Gdx.input.getY() - cardHeight / 2;
+				tmpVec.set(Gdx.input.getX(), Gdx.input.getY());
+				RainyDayGame.viewportUI.unproject(tmpVec);
 				
-				event.getListenerActor().setPosition(newX, newY);
+				event.getListenerActor().setPosition(tmpVec.x, tmpVec.y);
 				
-				if (newY > cardHeight) {
+				if (tmpVec.y > cardHeight) {
 					if (inHand) {
 						inHand = false;
 						lastIndex = playstate.getHandActor().removeCardFromHand(me.getCard());
@@ -61,7 +63,7 @@ public class CardActor extends ARDDActor {
 			public void dragStop(InputEvent event, float x, float y, int pointer) {
 				playstate.setDragToScroll(true);
 				
-				if (newY > cardHeight) {
+				if (tmpVec.y > cardHeight) {
 					
 					//Attempt to play the card
 					playstate.getAm().playCard(playstate.getPm().getCurrentUnit(), card);

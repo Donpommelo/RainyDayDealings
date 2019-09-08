@@ -41,6 +41,8 @@ public class UnitCard extends Card {
 	
 	public void die() {
 		occupied.getOccupants().remove(this);
+		ps.getPm().removeFromTOQ(this);
+		ps.getToqActor().removeUnit(this);
 		this.actor.remove();
 		
 		reset();

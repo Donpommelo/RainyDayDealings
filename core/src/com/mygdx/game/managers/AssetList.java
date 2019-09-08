@@ -20,7 +20,12 @@ public enum AssetList {
 	BACKGROUND1("placeholder/under_da_sea.jpg", Texture.class),
     BLACK("placeholder/black.png", Texture.class),
 	
-	TEMPFACE("placeholder/tel.png", Texture.class);
+    CLEMONT0("faces/clemont0.jpg", Texture.class),
+    KANDA0("faces/kanda0.jpg", Texture.class),
+    KAORU0("faces/kaoru0.jpg", Texture.class),
+    KENGO0("faces/kengo0.jpg", Texture.class),
+    SHADE0("faces/shade0.jpg", Texture.class),
+    TEMPFACE("placeholder/tel.png", Texture.class);
 	;
 	
 	//Enum constructor and methods.
