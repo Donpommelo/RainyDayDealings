@@ -15,21 +15,6 @@ import com.mygdx.game.managers.GameStateManager;
 public enum PlayerAction {
 
 	PAUSE(Input.Keys.ESCAPE),
-	PLAY_1(Input.Keys.NUM_1),
-	PLAY_2(Input.Keys.NUM_2),
-	PLAY_3(Input.Keys.NUM_3),
-	PLAY_4(Input.Keys.NUM_4),
-	PLAY_5(Input.Keys.NUM_5),
-	PLAY_6(Input.Keys.NUM_6),
-	PLAY_7(Input.Keys.NUM_7),
-	PLAY_8(Input.Keys.NUM_8),
-	PLAY_9(Input.Keys.NUM_9),
-	PLAY_10(Input.Keys.NUM_0),
-	PLAY_11(Input.Keys.MINUS),
-	PLAY_12(Input.Keys.EQUALS),
-	PLAY_13(Input.Keys.LEFT_BRACKET),
-	PLAY_14(Input.Keys.RIGHT_BRACKET),
-	PLAY_15(Input.Keys.BACKSLASH),
 	CYCLE_LEFT(Input.Keys.Q),
 	CYCLE_RIGHT(Input.Keys.E),
 	SELECT(Input.Keys.SPACE),
@@ -65,21 +50,6 @@ public enum PlayerAction {
 	public static void resetKeys() {
 				
 		PAUSE.setKey(Input.Keys.ESCAPE);
-		PLAY_1.setKey(Input.Keys.NUM_1);
-		PLAY_2.setKey(Input.Keys.NUM_2);
-		PLAY_3.setKey(Input.Keys.NUM_3);
-		PLAY_4.setKey(Input.Keys.NUM_4);
-		PLAY_5.setKey(Input.Keys.NUM_5);
-		PLAY_6.setKey(Input.Keys.NUM_6);
-		PLAY_7.setKey(Input.Keys.NUM_7);
-		PLAY_8.setKey(Input.Keys.NUM_8);
-		PLAY_9.setKey(Input.Keys.NUM_9);
-		PLAY_10.setKey(Input.Keys.NUM_0);
-		PLAY_11.setKey(Input.Keys.MINUS);
-		PLAY_12.setKey(Input.Keys.EQUALS);
-		PLAY_13.setKey(Input.Keys.LEFT_BRACKET);
-		PLAY_14.setKey(Input.Keys.RIGHT_BRACKET);
-		PLAY_15.setKey(Input.Keys.BACKSLASH);
 		CYCLE_LEFT.setKey(Input.Keys.Q);
 		CYCLE_RIGHT.setKey(Input.Keys.E);
 		SELECT.setKey(Input.Keys.SPACE);

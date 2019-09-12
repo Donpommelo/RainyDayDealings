@@ -6,6 +6,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.RainyDayGame;
 
+/**
+ * This is a simple actor drawn when the game is loading
+ * @author Zachary Tu
+ *
+ */
 public class LoadingBackdrop extends ARDDActor {
 
 private TextureAtlas atlas;

@@ -18,9 +18,13 @@ public class PhaseManager {
 
 	private PlayState ps;
 	
+	//ordered of list of units in the turn order queue
 	private ArrayList<UnitCard> toq;
+	
+	//This is the unit who is currently making an action
 	private UnitCard currentUnit;
 	
+	//round number
 	private int roundNum;
 	
 	private final static float actionDurationTemp = 1.0f;
@@ -31,10 +35,14 @@ public class PhaseManager {
 		
 	}
 	
+	/**
+	 * This is run when the level begins 
+	 */
 	public void startofLevel() {
 		
 		roundNum = 0;
 		
+		//Start level by activating start of level effects and drawing starting cards
 		ps.addAction(new Action("level start!", actionDurationTemp, true) {
 			
 			@Override
@@ -52,10 +60,14 @@ public class PhaseManager {
 		preRound();
 	}
 	
+	/**
+	 * This is run at the start of rounds
+	 */
 	public void preRound() {
 		
 		roundNum++;
 		
+		//add active units to the toq, sort it and create unit actors for the toq.
 		ps.addAction(new Action("Round: " + roundNum, actionDurationTemp, true) {
 			
 			@Override
@@ -77,6 +89,7 @@ public class PhaseManager {
 			}
 		});
 		
+		//draw cards at the start of round and process start of round effects
 		ps.addAction(new Action("", actionDurationTemp, false) {
 			
 			@Override
@@ -93,12 +106,17 @@ public class PhaseManager {
 		});
 	}
 	
+	/**
+	 * This is run at the start of each unit's turn in the round
+	 */
 	public void preTurn() {
 		
-		//pop off fastest fella
+		//pop off fastest fella. If no fellas left, round is over
 		if (toq.isEmpty()) {
 			postRound();
 		} else {
+			
+			//fella is removed from toq and gets to perform an action. Before turn effects activate
 			ps.addAction(new Action(toq.get(0).getName() + "'s turn", actionDurationTemp, true) {
 				
 				@Override
@@ -113,9 +131,12 @@ public class PhaseManager {
 		}
 	}
 	
+	/**
+	 * This is run when a unit ends their turn
+	 */
 	public void postTurn() {
-		//post turn effects.
 		
+		//post turn effects. Next unit makes their turn.
 		ps.addAction(new Action("", actionDurationTemp, false) {
 			
 			@Override
@@ -132,6 +153,9 @@ public class PhaseManager {
 		});
 	}
 	
+	/**
+	 * Run at end of rounds. atm, just does post round effects and restarts next round
+	 */
 	public void postRound() {
 		ps.getEm().cardTagProcTime(CardTagProcTime.AFTER_ROUND, 0, null, null, null, null, null);
 		preRound();
@@ -145,6 +169,10 @@ public class PhaseManager {
 		toq.remove(unit);
 	}
 	
+	/**
+	 * Sort toq according to unit's buffed speed.
+	 * speed ties are broken by chance
+	 */
 	public void sortTOQ() {
 		int j;
 		boolean flag = true;

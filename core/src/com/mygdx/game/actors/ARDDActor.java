@@ -5,6 +5,12 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.RainyDayGame;
 
+/**
+ * All actors in the game are descended from this actor.
+ * Contains stuff for managing location and hitbox
+ * @author Zachary Tu
+ *
+ */
 public class ARDDActor extends Actor {
 
 	//Reference to asset manager for obtaining assets.

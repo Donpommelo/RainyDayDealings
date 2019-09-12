@@ -10,9 +10,18 @@ import com.mygdx.game.stuff.Card;
 import com.mygdx.game.utils.CardTagProcTime;
 import com.mygdx.game.utils.EffectTag;
 
+/**
+ * This manages effects. mostly rpg-battle-ish stuff
+ * 
+ * This keeps track of all tags in the game and process their effects.
+ * @author Zachary Tu
+ *
+ */
 public class EffectManager {
 
 	private PlayState ps;
+	
+	//this is statuses/statuses checked for tag processing
 	private ArrayList<CardTag> tags;
 	private ArrayList<CardTag> tagsChecked;
 	
@@ -22,18 +31,28 @@ public class EffectManager {
 		this.tagsChecked = new ArrayList<CardTag>();
 	}
 
+	/**
+	 * This is run whenever anything that could proc an efect is run
+	 * @param procTime: type of proc effect
+	 * 
+	 * all inputs are just different things certain proc effects need to process
+	 * @return: integer in case of effect that modifies a value like on hp change
+	 */
 	public int cardTagProcTime(CardTagProcTime procTime, int amount, UnitCard fella1, UnitCard fella2, Card card, CardTag tag, Square square, EffectTag... extra) {
 		
 		int finalAmount = amount;
 		
+		//remember which tags have already been processed if running this method recursively
 		ArrayList<CardTag> oldChecked = new ArrayList<CardTag>();
-		
+
 		for(CardTag t : tagsChecked){
 			tags.add(0, t);
 			oldChecked.add(t);
 		}
 		tagsChecked.clear();
 		
+		
+		//iterate through all tags running their effects and marking them as checked
 		while(!tags.isEmpty()) {
 			CardTag tempTag = tags.get(0);
 			
@@ -45,6 +64,7 @@ public class EffectManager {
 			}
 		}
 		
+		//set tags checked to their state before this was run
 		for(CardTag s : tagsChecked){
 			if(!oldChecked.contains(s)){
 				tags.add(s);

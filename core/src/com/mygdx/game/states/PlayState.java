@@ -36,6 +36,11 @@ import com.mygdx.game.stuff.SelectionStage;
 import com.mygdx.game.stuff.Team;
 import com.mygdx.game.utils.CameraStyles;
 
+/**
+ * This is the state where all the playing happens
+ * @author Zachary Tu
+ *
+ */
 public class PlayState extends GameState {
 	
 	
@@ -62,21 +67,31 @@ public class PlayState extends GameState {
 	private int cameraXMove, cameraYMove = 0;
 	private int cameraMinX, cameraMinY, cameraMaxX, cameraMaxY;
 	
+	//speed that the camera moves
 	private final static float cameraSpeed = 15.0f;
+	
+	//spped that the camera zoom changes
 	private final static float zoomSpeed = 0.4f;
+	
+	//zoom bounds of the level
 	private final static float zoomMin = 0.5f;
 	private final static float zoomMax = 2.0f;
 	
+	//All of the teams in the game (usually just player and enemy)
 	private ArrayList<Team> teams;
+	
+	//ui actors and actor managers
 	private HandActor handActor;
 	private TOQActor toqActor;
 	private UnitActionActor actionActor;
-	
 	private ActionLog log;
+	
+	//This process the queue of actions. Added to by any effect.
 	private ArrayList<Action> actionQueue;
 	private Action currentAction;
 	private float actionTimer;
 	
+	//i want to speak with your manager
 	private ActionManager am;
 	private EffectManager em;
 	private DeckManager dm;
@@ -84,9 +99,13 @@ public class PlayState extends GameState {
 	private NumberManager nm;
 	private UnitManager um;
 	
+	//This is the current selection stage. Null if the plaer is not currently making a selection
 	private SelectionStage currentSelection;
+	
+	//portrait of the currently selected unit
 	private PortraitActor portrait;
 	
+	//Should dragging move the camera. Disabled when the player is dragging a card
 	private boolean dragToScroll;
 	
 	public PlayState(GameStateManager gsm) {
@@ -104,8 +123,10 @@ public class PlayState extends GameState {
 		this.bg = RainyDayGame.assetManager.get(AssetList.BACKGROUND1.toString());
 		this.black = RainyDayGame.assetManager.get(AssetList.BLACK.toString());
 		
+		//Set up player input
 		controller = new PlayerController(this);
 		
+		//Set up camera location, zoom and boundaries
 		cameraTarget = new Vector2(camera.position.x, camera.position.y);
 		zoom = 1.0f;
 		zoomDesired = 1.0f;
@@ -117,6 +138,7 @@ public class PlayState extends GameState {
 		cameraMinY = 0;
 		cameraMaxY = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
 		
+		//set up teams. (tentatively hard coded_
 		this.teams = new ArrayList<Team>();
 		teams.add(new Team(this, new Deck(this), false));
 		teams.add(new Team(this, new Deck(this), true));
@@ -145,6 +167,8 @@ public class PlayState extends GameState {
 				
 			}
 		};
+		
+		//Create ui actors
 		log = new ActionLog(this);
 		handActor = new HandActor(this);
 		toqActor = new TOQActor(this);
@@ -152,6 +176,7 @@ public class PlayState extends GameState {
 		
 		app.newMenu(stage);
 		
+		//reset player inputs
 		resetController();
 	}
 	
@@ -175,6 +200,8 @@ public class PlayState extends GameState {
 	@Override
 	public void update(float delta) {
 		
+		//If there is a current action, decrement its timer
+		//When an action completes, run its post action and clear it
 		if (currentAction != null) {
 			actionTimer -= delta;
 			
@@ -183,6 +210,8 @@ public class PlayState extends GameState {
 				currentAction = null;
 			}
 		} else if (!actionQueue.isEmpty()) {
+			
+			//if there is no current action, but there are queued up actions, pop off an action and run it.
 			
 			currentAction = actionQueue.remove(0);
 			
@@ -229,6 +258,7 @@ public class PlayState extends GameState {
 		camera.zoom = zoom;
 		sprite.zoom = zoom;
 		
+		//move camera target within boundaries
 		cameraTarget.set(obeyCameraBounds(cameraTarget.x + cameraXMove * cameraSpeed, cameraTarget.y + cameraYMove * cameraSpeed));
 		
 		CameraStyles.lerpToTarget(camera, cameraTarget);
@@ -251,6 +281,11 @@ public class PlayState extends GameState {
 		}
 	}
 	
+	/**
+	 * Set the camera target to input location
+	 * @param x, y: location of camera position
+	 * @param lerp: do we lerp or instantly move
+	 */
 	public void setCamera(float x, float y, boolean lerp) {
 		Vector2 newCamera = obeyCameraBounds(x, y);
 		
@@ -263,6 +298,12 @@ public class PlayState extends GameState {
 		}		
 	}
 	
+	/**
+	 * This helper method simply takes in coordinates and makes them obey camera boundaries
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public Vector2 obeyCameraBounds(float x, float y) {
 		
 		float newX = x;
@@ -292,10 +333,17 @@ public class PlayState extends GameState {
 		
 	}
 	
+	/**
+	 * Add an action to the queue.
+	 * @param action: new action
+	 */
 	public void addAction(Action action) {
 		actionQueue.add(action);
 	}
 	
+	/**
+	 * temporary setting starting locations for starting units
+	 */
 	public void setStartingLocations() {
 		for (Team team: teams) {
 			if (team.isPlayer()) {
@@ -310,6 +358,10 @@ public class PlayState extends GameState {
 		}
 	}
 	
+	/**
+	 * This method searches all squares and returns all unit occupants
+	 * @return: active units
+	 */
 	public ArrayList<UnitCard> getActiveUnits() {
 		
 		ArrayList<UnitCard> activeUnits = new ArrayList<UnitCard>();

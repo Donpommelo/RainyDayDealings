@@ -31,66 +31,6 @@ public class PlayerController implements InputProcessor {
 			
 		}
 		
-		if (keycode == PlayerAction.PLAY_1.getKey()) {
-			
-		}
-		
-		if (keycode == PlayerAction.PLAY_2.getKey()) {
-					
-		}
-		
-		if (keycode == PlayerAction.PLAY_3.getKey()) {
-			
-		}
-
-		if (keycode == PlayerAction.PLAY_4.getKey()) {
-			
-		}
-		
-		if (keycode == PlayerAction.PLAY_5.getKey()) {
-			
-		}
-		
-		if (keycode == PlayerAction.PLAY_6.getKey()) {
-			
-		}
-		
-		if (keycode == PlayerAction.PLAY_7.getKey()) {
-			
-		}
-		
-		if (keycode == PlayerAction.PLAY_8.getKey()) {
-			
-		}
-		
-		if (keycode == PlayerAction.PLAY_9.getKey()) {
-			
-		}
-		
-		if (keycode == PlayerAction.PLAY_10.getKey()) {
-			
-		}
-		
-		if (keycode == PlayerAction.PLAY_11.getKey()) {
-			
-		}
-		
-		if (keycode == PlayerAction.PLAY_12.getKey()) {
-			
-		}
-		
-		if (keycode == PlayerAction.PLAY_13.getKey()) {
-			
-		}
-		
-		if (keycode == PlayerAction.PLAY_14.getKey()) {
-			
-		}
-		
-		if (keycode == PlayerAction.PLAY_15.getKey()) {
-			
-		}
-		
 		if (keycode == PlayerAction.CYCLE_LEFT.getKey()) {
 			
 		}
@@ -226,6 +166,8 @@ public class PlayerController implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		
+		//If drag to move camera is enabled, move camera
 		if (ps.isDragToScroll()) {
 			ps.setCamera(ps.camera.position.x - Gdx.input.getDeltaX(), ps.camera.position.y + Gdx.input.getDeltaY(), false);
 		}

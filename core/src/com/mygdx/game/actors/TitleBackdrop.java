@@ -5,6 +5,11 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.RainyDayGame;
 import com.mygdx.game.managers.AssetList;
 
+/**
+ * This is a static image actor in the back of the title
+ * @author Zachary Tu
+ *
+ */
 public class TitleBackdrop extends ARDDActor {
 
 	private Texture backgroundTexture;

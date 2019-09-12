@@ -6,11 +6,20 @@ import com.mygdx.game.actors.SquareActor;
 import com.mygdx.game.cards.UnitCard;
 import com.mygdx.game.states.PlayState;
 
+/**
+ * This is a square in the board.
+ * @author Zachary Tu
+ *
+ */
 public class Square {
 
 	
 //	private PlayState ps;
+	
+	//list of squares that are 1 away from this one.
 	private ArrayList<Square> neighbors;
+	
+	//list of units currently inside of this square
 	private ArrayList<UnitCard> occupants;
 	
 	private SquareActor actor;

@@ -9,6 +9,12 @@ import com.mygdx.game.numbers.Number;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.utils.Stats;
 
+/**
+ * This is not technically an actor, but rather a class that manages a group of actors.
+ * These are a group of menu options that let the player make actions for the current turn unit
+ * @author Zachary Tu
+ *
+ */
 public class UnitActionActor {
 
 	private final static int portraitX = 0;
@@ -17,7 +23,6 @@ public class UnitActionActor {
 	private final static int portraitHeight = 300;
 	private final static float scale = 0.5f;
 	private final static int padY = 40;
-
 
 	private PlayState ps;
 	private UnitCard unit;
@@ -35,9 +40,14 @@ public class UnitActionActor {
 		ps.getStage().addActor(table);
 	}
 	
+	/**
+	 * This is run when at the start of the turn when a new unit is at the front of the toq.
+	 * @param unit: current turn unit
+	 */
 	public void switchUnit(final UnitCard unit) {
 		this.unit = unit;
 		
+		//reset action limits
 		movesUsed = 0;
 		skillsUsed = 0;
 		cardsUsed = 0;
@@ -50,6 +60,7 @@ public class UnitActionActor {
 			@Override
 	        public void clicked(InputEvent e, float x, float y) {
 				
+				//If the player can still move, roll a number and move.
 				if (movesUsed < 1 + unit.getBuffedStat(Stats.MOVE_LIMIT)) {
 					movesUsed++;
 
@@ -77,10 +88,11 @@ public class UnitActionActor {
 			
 			@Override
 	        public void clicked(InputEvent e, float x, float y) {
-				//end turn
-				table.clear();
 				
+				//turn only ended when no actions are being processed.
 				if (ps.getActionQueue().isEmpty()) {
+					//end turn
+					table.clear();
 					ps.getPm().postTurn();
 				}
 	        }

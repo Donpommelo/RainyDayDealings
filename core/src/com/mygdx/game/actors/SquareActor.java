@@ -7,8 +7,14 @@ import com.mygdx.game.RainyDayGame;
 import com.mygdx.game.board.Square;
 import com.mygdx.game.states.PlayState;
 
+/**
+ * This actor represents a single square in the board
+ * @author Zachary Tu
+ *
+ */
 public class SquareActor extends ARDDActor {
 
+	//This is the square this actor represents
 	private Square square;
 	
 	public SquareActor(final PlayState ps, Square square, int x, int y, int width, int height) {
@@ -16,6 +22,7 @@ public class SquareActor extends ARDDActor {
 		this.square = square;
 		final SquareActor me = this;
 		
+		//When clicked, if there is an active selection stage, select this square.
 		addListener(new ClickListener() {
 			
 			@Override
@@ -26,12 +33,6 @@ public class SquareActor extends ARDDActor {
 	        }
 		});
 	}
-
-	@Override
-    public void draw(Batch batch, float alpha) {
-         
-		RainyDayGame.SYSTEM_FONT_SPRITE.draw(batch, "FUG", getX(), getY());
-    }
 	
 	public Square getSquare() {
 		return square;
